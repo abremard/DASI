@@ -19,6 +19,7 @@ public class Client implements Serializable {
     private Long id;
     private String nom;
     private String prenom;
+    private String dateDeNaissance;
     @Column(unique = true)
     private String mail;
     private String adresse;
@@ -125,7 +126,13 @@ public class Client implements Serializable {
         this.motDePasse = motDePasse;
     }
 
-    
+    public String getDateDeNaissance() {
+        return motDePasse;
+    }
+
+    public void setDateDeNaissance(String dateDeNaissance) {
+        this.dateDeNaissance = dateDeNaissance;
+    } 
 
     @Override
     public String toString() {

@@ -38,6 +38,10 @@ public class ClientDao {
         TypedQuery<Client> query = em.createQuery("SELECT c FROM Client c ORDER BY c.nom ASC, c.prenom ASC", Client.class);
         return query.getResultList();
     }
-    
-    // modifier / supprimer  ... 
+
+    public void supprimerClient(Client client, String SigneZodiac, String SigneAstro, String CouleurBonheur, String AnimalTotem) {
+        EntityManager em = JpaUtil.obtenirContextePersistance();
+        em.remove(client);
+    }
+
 }
