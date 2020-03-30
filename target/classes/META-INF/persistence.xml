@@ -4,6 +4,7 @@
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>fr.insalyon.dasi.metier.modele.Client</class>
     <class>fr.insalyon.dasi.metier.modele.Employes</class>
+    <class>fr.insalyon.dasi.metier.modele.Medium</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/ProjetTest"/>
       <property name="javax.persistence.jdbc.user" value="test"/>
