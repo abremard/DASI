@@ -38,7 +38,13 @@ public class ConsultationDao {
         TypedQuery<Consultation> query = em.createQuery("SELECT c FROM Consultation c ORDER BY c.nom ASC, c.prenom ASC", Consultation.class);
         return query.getResultList();
     }
-    
+
+    public void setCommentaire(Consultation consultation, String commentaire) {
+        EntityManager em = JpaUtil.obtenirContextePersistance();
+        em.persist(consultation);
+        consultation.setCommentaire(commentaire);
+    }
+
     public void supprimerConsultation(Consultation consultation, String SigneZodiac, String SigneAstro, String CouleurBonheur, String AnimalTotem) {
         EntityManager em = JpaUtil.obtenirContextePersistance();
         em.remove(consultation);

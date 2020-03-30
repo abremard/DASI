@@ -7,6 +7,9 @@ import fr.insalyon.dasi.dao.ConsultationDao;
 
 import fr.insalyon.dasi.dao.JpaUtil;
 import fr.insalyon.dasi.metier.modele.Client;
+import fr.insalyon.dasi.metier.modele.Employe;
+import fr.insalyon.dasi.metier.modele.Medium;
+import fr.insalyon.dasi.metier.modele.Consultation;
 import java.io.IOException;
 import java.util.List;
 
@@ -99,7 +102,63 @@ public class Service {
     public void remplirProfilAstral(Client client) throws IOException {
         List<String> profilAstral = this.astroTest.getProfil(client.getPrenom(), client.getDateDeNaissance());
         JpaUtil.creerContextePersistance();
-        
+        try {
+            JpaUtil.ouvrirTransaction();
+            clientDao.ajouterProfilAstral(client, profilAstral);
+            JpaUtil.validerTransaction();
+        } catch (Exception ex) {
+            Logger.getAnonymousLogger().log(Level.WARNING, "Exception lors de l'appel au Service remplirProfilAstral(client)", ex);
+            JpaUtil.annulerTransaction();
+        } finally {
+            JpaUtil.fermerContextePersistance();
+        }
+    }
+
+    // Envoyer un mail au client
+    public String envoyerMailConfirmationInscription(Client client) throws IOException {
+        Client resultat = null;
+        String message = 
+        "Expéditeur : contact@predict.if" + System.lineSeparator() +
+        "Pour : " + client.getMail() + System.lineSeparator();
+        JpaUtil.creerContextePersistance();
+        try {
+            resultat = clientDao.chercherParMail(client.getMail());
+            if (resultat != null) {
+                message +=
+                "Sujet : Echec de l’inscription chez PREDICT’IF" + System.lineSeparator() +
+                "Corps : Bonjour " + client.getPrenom() + ", votre inscription au service PREDICT’IF a malencontreusement échoué..." + System.lineSeparator() +
+                "Merci de recommencer ultérieurement.";
+            }
+            else {
+                message +=
+                "Sujet : Bienvenue chez PREDICT’IF" + System.lineSeparator() +
+                "Corps : Bonjour " + client.getPrenom() + ", nous vous confirmons votre inscription au service PREDICT’IF.Rendezvous vite sur notre site pour consulter votre profil astrologique et profiter des dons incroyables de nos mediums";                
+            }
+        } catch (Exception ex) {
+            Logger.getAnonymousLogger().log(Level.WARNING, "Exception lors de l'appel au Service remplirProfilAstral(client)", ex);
+            JpaUtil.annulerTransaction();
+        } finally {
+            JpaUtil.fermerContextePersistance();
+        }
+        return message;
+    }
+
+    // Envoyer un SMS au client
+    public String EnvoyerMessageDemandeConsultation(Client client, Employe employe, Medium medium, Consultation consultation) throws IOException {
+        String message =
+        "Pour : " + client.getPrenom() + " " + client.getNom() + ", Tel : " + client.getTelephone() + System.lineSeparator() +
+        "Message : Bonjour " + client.getPrenom() + ". J'ai bien reçu votre demande de consultation du " + consultation.getTemps().toString() + ". Vous pouvez dès à présent me contacter au " + employe.getTelephone() + ". A tout de suite ! Médiumiquement vôtre, " + medium.getDenomination();
+        JpaUtil.creerContextePersistance();
+        return message;
+    }
+
+    // Envoyer un SMS à l'employé
+    public String EnvoyerMessageConsultation(Client client, Employe employe, Medium medium, Consultation consultation) throws IOException {
+        String message =
+        "Pour : " + employe.getPrenom() + " " + employe.getNom() + ", Tel : " + employe.getTelephone() + System.lineSeparator() +
+        "Message : Bonjour " + employe.getPrenom() + ". Consultation requise pour " + client.getPrenom() + " " + client.getNom() + ". Médium à incarner : " + medium.getDenomination();
+        JpaUtil.creerContextePersistance();
+        return message;
     }
 
 }

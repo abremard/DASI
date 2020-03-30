@@ -39,6 +39,15 @@ public class ClientDao {
         return query.getResultList();
     }
 
+    public void ajouterProfilAstral(Client client, List<String> profilAstral) {
+        EntityManager em = JpaUtil.obtenirContextePersistance();
+        em.persist(client);
+        client.setSigneZodiaque(profilAstral.get(0));
+        client.setSigneAstro(profilAstral.get(1));
+        client.setCouleurBonheur(profilAstral.get(2));
+        client.setAnimalTotem(profilAstral.get(3));
+    }
+
     public void supprimerClient(Client client, String SigneZodiac, String SigneAstro, String CouleurBonheur, String AnimalTotem) {
         EntityManager em = JpaUtil.obtenirContextePersistance();
         em.remove(client);
