@@ -1,9 +1,17 @@
 package fr.insalyon.dasi.metier.service;
 
 import fr.insalyon.dasi.dao.ClientDao;
+import fr.insalyon.dasi.dao.EmployeDao;
+import fr.insalyon.dasi.dao.MediumDao;
+import fr.insalyon.dasi.dao.ConsultationDao;
+
 import fr.insalyon.dasi.dao.JpaUtil;
 import fr.insalyon.dasi.metier.modele.Client;
 import java.util.List;
+
+import util.AstroTest;
+import util.Message;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -14,6 +22,11 @@ import java.util.logging.Logger;
 public class Service {
 
     protected ClientDao clientDao = new ClientDao();
+    protected EmployeDao employeDao = new EmployeDao();
+    protected MediumDao mediumDao = new MediumDao();
+    protected ConsultationDao consultationDao = new ConsultationDao();
+
+    protected AstroTest astroTest = new AstroTest();
 
     public Long inscrireClient(Client client) {
         Long resultat = null;
@@ -80,6 +93,10 @@ public class Service {
             JpaUtil.fermerContextePersistance();
         }
         return resultat;
+    }
+
+    public void remplirProfilAstral(Client client) {
+        this.astroTest.getProfil(client.getPrenom(), client.get)
     }
 
 }

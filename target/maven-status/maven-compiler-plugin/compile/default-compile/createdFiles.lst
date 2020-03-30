@@ -5,4 +5,5 @@ fr\insalyon\dasi\dao\JpaUtil$1.class
 fr\insalyon\dasi\ihm\console\Main.class
 fr\insalyon\dasi\ihm\console\Saisie.class
 fr\insalyon\dasi\metier\modele\Client_.class
+.netbeans_automatic_build
 fr\insalyon\dasi\metier\service\Service.class

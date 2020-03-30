@@ -1,0 +1,53 @@
+package fr.insalyon.dasi.dao;
+
+import fr.insalyon.dasi.metier.modele.Consultation;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+
+/**
+ *
+ * @author DASI Team
+ */
+public class ConsultationDao {
+    
+    public void creer(Consultation consultation) {
+        EntityManager em = JpaUtil.obtenirContextePersistance();
+        em.persist(Consultation);
+    }
+    
+    public Consultation chercherParId(Long consultationId) {
+        EntityManager em = JpaUtil.obtenirContextePersistance();
+        return em.find(Consultation.class, consultationId); // renvoie null si l'identifiant n'existe pas
+    }
+    
+    public Consultation chercherParMail(String consultationMail) {
+        EntityManager em = JpaUtil.obtenirContextePersistance();
+        TypedQuery<Consultation> query = em.createQuery("SELECT c FROM Consultation c WHERE c.mail = :mail", Consultation.class);
+        query.setParameter("mail", consultationMail); // correspond au paramètre ":mail" dans la requête
+        List<Consultation> Consultations = query.getResultList();
+        Consultation result = null;
+        if (!Consultations.isEmpty()) {
+            result = Consultations.get(0); // premier de la liste
+        }
+        return result;
+    }
+    
+    public List<Consultation> listerConsultations() {
+        EntityManager em = JpaUtil.obtenirContextePersistance();
+        TypedQuery<Consultation> query = em.createQuery("SELECT c FROM Consultation c ORDER BY c.nom ASC, c.prenom ASC", Consultation.class);
+        return query.getResultList();
+    }
+
+    public void updateNbConsultationConsultation(Consultation consultation, int nbConsultation) {
+        EntityManager em = JpaUtil.obtenirContextePersistance();
+        em.persist(consultation);
+        Consultation.setNbConsultation(nbConsultation);
+    }
+    
+    public void supprimerConsultation(Consultation consultation, String SigneZodiac, String SigneAstro, String CouleurBonheur, String AnimalTotem) {
+        EntityManager em = JpaUtil.obtenirContextePersistance();
+        em.remove(consultation);
+    }
+
+}
