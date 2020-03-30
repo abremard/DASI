@@ -1,6 +1,8 @@
 package fr.insalyon.dasi.metier.modele;
 
 import java.io.Serializable;
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,7 +21,7 @@ public class Client implements Serializable {
     private Long id;
     private String nom;
     private String prenom;
-    private String dateDeNaissance;
+    private Date dateDeNaissance;
     @Column(unique = true)
     private String mail;
     private String adresse;
@@ -126,11 +128,11 @@ public class Client implements Serializable {
         this.motDePasse = motDePasse;
     }
 
-    public String getDateDeNaissance() {
-        return motDePasse;
+    public Date getDateDeNaissance() {
+        return dateDeNaissance;
     }
 
-    public void setDateDeNaissance(String dateDeNaissance) {
+    public void setDateDeNaissance(Date dateDeNaissance) {
         this.dateDeNaissance = dateDeNaissance;
     } 
 

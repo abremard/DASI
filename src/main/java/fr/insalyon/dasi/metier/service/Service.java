@@ -7,6 +7,7 @@ import fr.insalyon.dasi.dao.ConsultationDao;
 
 import fr.insalyon.dasi.dao.JpaUtil;
 import fr.insalyon.dasi.metier.modele.Client;
+import java.io.IOException;
 import java.util.List;
 
 import util.AstroTest;
@@ -95,8 +96,10 @@ public class Service {
         return resultat;
     }
 
-    public void remplirProfilAstral(Client client) {
-        this.astroTest.getProfil(client.getPrenom(), client.get)
+    public void remplirProfilAstral(Client client) throws IOException {
+        List<String> profilAstral = this.astroTest.getProfil(client.getPrenom(), client.getDateDeNaissance());
+        JpaUtil.creerContextePersistance();
+        
     }
 
 }

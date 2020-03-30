@@ -1,14 +1,15 @@
 package fr.insalyon.dasi.metier.modele;
 
+import java.util.Date;
 import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2020-03-30T16:51:52")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2020-03-30T17:34:00")
 @StaticMetamodel(Client.class)
 public class Client_ { 
 
-    public static volatile SingularAttribute<Client, String> dateDeNaissance;
+    public static volatile SingularAttribute<Client, Date> dateDeNaissance;
     public static volatile SingularAttribute<Client, String> signeZodiaque;
     public static volatile SingularAttribute<Client, String> motDePasse;
     public static volatile SingularAttribute<Client, String> mail;
