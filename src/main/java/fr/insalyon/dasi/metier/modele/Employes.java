@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package fr.insalyon.dasi.metier.modele;
 
 import java.io.Serializable;
@@ -9,10 +14,10 @@ import javax.persistence.Id;
 
 /**
  *
- * @author DASI Team
+ * @author Iyad
  */
 @Entity
-public class Client implements Serializable {
+public class Employes implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,30 +26,25 @@ public class Client implements Serializable {
     private String prenom;
     @Column(unique = true)
     private String mail;
-    private String adresse;
     private String telephone;
-    private String signeZodiaque;
-    private String signeAstro;
-    private String couleurBonheur; 
-    private String animalTotem;
     private String motDePasse;
-    protected Client() {
+    private int nbConsultation;
+    
+    protected Employes() {
     }
 
-    public Client(String nom, String prenom, String mail, String adresse, String telephone, String motDePasse) {
+    public Employes(String nom, String prenom, String mail, String telephone, String motDePasse) {
         this.nom = nom;
         this.prenom = prenom;
         this.mail = mail;
-        this.adresse = adresse;
         this.telephone = telephone;
         this.motDePasse = motDePasse;
-        
     }
 
     public Long getId() {
         return id;
     }
-
+    
     public String getNom() {
         return nom;
     }
@@ -69,52 +69,12 @@ public class Client implements Serializable {
         this.mail = mail;
     }
 
-    public String getAdresse() {
-        return adresse;
-    }
-
-    public void setAdresse(String adresse) {
-        this.adresse = adresse;
-    }
-
     public String getTelephone() {
         return telephone;
     }
 
     public void setTelephone(String telephone) {
         this.telephone = telephone;
-    }
-
-    public String getSigneZodiaque() {
-        return signeZodiaque;
-    }
-
-    public void setSigneZodiaque(String signeZodiaque) {
-        this.signeZodiaque = signeZodiaque;
-    }
-
-    public String getSigneAstro() {
-        return signeAstro;
-    }
-
-    public void setSigneAstro(String signeAstro) {
-        this.signeAstro = signeAstro;
-    }
-
-    public String getCouleurBonheur() {
-        return couleurBonheur;
-    }
-
-    public void setCouleurBonheur(String couleurBonheur) {
-        this.couleurBonheur = couleurBonheur;
-    }
-
-    public String getAnimalTotem() {
-        return animalTotem;
-    }
-
-    public void setAnimalTotem(String animalTotem) {
-        this.animalTotem = animalTotem;
     }
 
     public String getMotDePasse() {
@@ -125,12 +85,12 @@ public class Client implements Serializable {
         this.motDePasse = motDePasse;
     }
 
-    
+    public int getNbConsultation() {
+        return nbConsultation;
+    }
 
-    @Override
-    public String toString() {
-        return "Client : id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", mail=" + mail + ", motDePasse=" + motDePasse;
+    public void setNbConsultation(int nbConsultation) {
+        this.nbConsultation = nbConsultation;
     }
     
-
 }
