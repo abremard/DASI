@@ -19,18 +19,27 @@ public class Client implements Serializable {
     private Long id;
     private String nom;
     private String prenom;
+    private String dateDeNaissance;
     @Column(unique = true)
     private String mail;
+    private String adresse;
+    private String telephone;
+    private String signeZodiaque;
+    private String signeAstro;
+    private String couleurBonheur; 
+    private String animalTotem;
     private String motDePasse;
-
     protected Client() {
     }
 
-    public Client(String nom, String prenom, String mail, String motDePasse) {
+    public Client(String nom, String prenom, String mail, String adresse, String telephone, String motDePasse) {
         this.nom = nom;
         this.prenom = prenom;
         this.mail = mail;
+        this.adresse = adresse;
+        this.telephone = telephone;
         this.motDePasse = motDePasse;
+        
     }
 
     public Long getId() {
@@ -61,6 +70,54 @@ public class Client implements Serializable {
         this.mail = mail;
     }
 
+    public String getAdresse() {
+        return adresse;
+    }
+
+    public void setAdresse(String adresse) {
+        this.adresse = adresse;
+    }
+
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
+
+    public String getSigneZodiaque() {
+        return signeZodiaque;
+    }
+
+    public void setSigneZodiaque(String signeZodiaque) {
+        this.signeZodiaque = signeZodiaque;
+    }
+
+    public String getSigneAstro() {
+        return signeAstro;
+    }
+
+    public void setSigneAstro(String signeAstro) {
+        this.signeAstro = signeAstro;
+    }
+
+    public String getCouleurBonheur() {
+        return couleurBonheur;
+    }
+
+    public void setCouleurBonheur(String couleurBonheur) {
+        this.couleurBonheur = couleurBonheur;
+    }
+
+    public String getAnimalTotem() {
+        return animalTotem;
+    }
+
+    public void setAnimalTotem(String animalTotem) {
+        this.animalTotem = animalTotem;
+    }
+
     public String getMotDePasse() {
         return motDePasse;
     }
@@ -68,6 +125,14 @@ public class Client implements Serializable {
     public void setMotDePasse(String motDePasse) {
         this.motDePasse = motDePasse;
     }
+
+    public String getDateDeNaissance() {
+        return motDePasse;
+    }
+
+    public void setDateDeNaissance(String dateDeNaissance) {
+        this.dateDeNaissance = dateDeNaissance;
+    } 
 
     @Override
     public String toString() {

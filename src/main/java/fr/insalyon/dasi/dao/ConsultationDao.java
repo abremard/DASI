@@ -13,7 +13,7 @@ public class ConsultationDao {
     
     public void creer(Consultation consultation) {
         EntityManager em = JpaUtil.obtenirContextePersistance();
-        em.persist(Consultation);
+        em.persist(consultation);
     }
     
     public Consultation chercherParId(Long consultationId) {
@@ -37,12 +37,6 @@ public class ConsultationDao {
         EntityManager em = JpaUtil.obtenirContextePersistance();
         TypedQuery<Consultation> query = em.createQuery("SELECT c FROM Consultation c ORDER BY c.nom ASC, c.prenom ASC", Consultation.class);
         return query.getResultList();
-    }
-
-    public void updateNbConsultationConsultation(Consultation consultation, int nbConsultation) {
-        EntityManager em = JpaUtil.obtenirContextePersistance();
-        em.persist(consultation);
-        Consultation.setNbConsultation(nbConsultation);
     }
     
     public void supprimerConsultation(Consultation consultation, String SigneZodiac, String SigneAstro, String CouleurBonheur, String AnimalTotem) {

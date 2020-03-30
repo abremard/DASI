@@ -13,7 +13,7 @@ public class MediumDao {
     
     public void creer(Medium medium) {
         EntityManager em = JpaUtil.obtenirContextePersistance();
-        em.persist(Medium);
+        em.persist(medium);
     }
     
     public Medium chercherParId(Long mediumId) {
@@ -39,12 +39,6 @@ public class MediumDao {
         return query.getResultList();
     }
 
-    public void updateNbConsultationMedium(Medium medium, int nbConsultation) {
-        EntityManager em = JpaUtil.obtenirContextePersistance();
-        em.persist(medium);
-        Medium.setNbConsultation(nbConsultation);
-    }
-    
     public void supprimerMedium(Medium medium, String SigneZodiac, String SigneAstro, String CouleurBonheur, String AnimalTotem) {
         EntityManager em = JpaUtil.obtenirContextePersistance();
         em.remove(medium);
