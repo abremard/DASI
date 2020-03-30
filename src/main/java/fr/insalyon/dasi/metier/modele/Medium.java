@@ -24,17 +24,15 @@ public class Medium implements Serializable {
     private String type;
     private String denomination;
     private String genre;
-    private String support;
     private String presentation;
 
     public Medium() {
     }
 
-    public Medium(String type, String denomination, String genre, String support, String presentation) {
+    public Medium(String type, String denomination, String genre, String presentation) {
         this.type = type;
         this.denomination = denomination;
         this.genre = genre;
-        this.support = support;
         this.presentation = presentation;
     }
 
@@ -64,14 +62,6 @@ public class Medium implements Serializable {
 
     public void setGenre(String genre) {
         this.genre = genre;
-    }
-
-    public String getSupport() {
-        return support;
-    }
-
-    public void setSupport(String support) {
-        this.support = support;
     }
 
     public String getPresentation() {
