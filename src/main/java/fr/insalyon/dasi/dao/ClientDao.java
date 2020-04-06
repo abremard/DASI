@@ -10,12 +10,14 @@ import javax.persistence.TypedQuery;
  * @author DASI Team
  */
 public class ClientDao {
-    
+
+    // --------------------------CREATE----------------------------    
     public void creer(Client client) {
         EntityManager em = JpaUtil.obtenirContextePersistance();
         em.persist(client);
     }
-    
+
+    // --------------------------READ----------------------------
     public Client chercherParId(Long clientId) {
         EntityManager em = JpaUtil.obtenirContextePersistance();
         return em.find(Client.class, clientId); // renvoie null si l'identifiant n'existe pas
@@ -38,16 +40,13 @@ public class ClientDao {
         TypedQuery<Client> query = em.createQuery("SELECT c FROM Client c ORDER BY c.nom ASC, c.prenom ASC", Client.class);
         return query.getResultList();
     }
-
-    public void ajouterProfilAstral(Client client, List<String> profilAstral) {
+    // --------------------------UPDATE----------------------------
+    public Client modifierClient(Client client) {
         EntityManager em = JpaUtil.obtenirContextePersistance();
-        em.persist(client);
-        client.setSigneZodiaque(profilAstral.get(0));
-        client.setSigneAstro(profilAstral.get(1));
-        client.setCouleurBonheur(profilAstral.get(2));
-        client.setAnimalTotem(profilAstral.get(3));
+        return em.merge(client);
     }
 
+    // --------------------------DELETE----------------------------
     public void supprimerClient(Client client, String SigneZodiac, String SigneAstro, String CouleurBonheur, String AnimalTotem) {
         EntityManager em = JpaUtil.obtenirContextePersistance();
         em.remove(client);

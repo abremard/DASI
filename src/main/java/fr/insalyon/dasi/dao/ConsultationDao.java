@@ -1,6 +1,8 @@
 package fr.insalyon.dasi.dao;
 
 import fr.insalyon.dasi.metier.modele.Consultation;
+import fr.insalyon.dasi.metier.modele.Statut;
+
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -10,12 +12,14 @@ import javax.persistence.TypedQuery;
  * @author DASI Team
  */
 public class ConsultationDao {
-    
+
+    // --------------------------CREATE----------------------------
     public void creer(Consultation consultation) {
         EntityManager em = JpaUtil.obtenirContextePersistance();
         em.persist(consultation);
     }
-    
+
+    // --------------------------READ----------------------------    
     public Consultation chercherParId(Long consultationId) {
         EntityManager em = JpaUtil.obtenirContextePersistance();
         return em.find(Consultation.class, consultationId); // renvoie null si l'identifiant n'existe pas
@@ -39,13 +43,14 @@ public class ConsultationDao {
         return query.getResultList();
     }
 
-    public void setCommentaire(Consultation consultation, String commentaire) {
+    // --------------------------UPDATE----------------------------
+    public Consultation modifierConsultation(Consultation consultation) {
         EntityManager em = JpaUtil.obtenirContextePersistance();
-        em.persist(consultation);
-        consultation.setCommentaire(commentaire);
+        return em.merge(consultation);
     }
 
-    public void supprimerConsultation(Consultation consultation, String SigneZodiac, String SigneAstro, String CouleurBonheur, String AnimalTotem) {
+    // --------------------------DELETE----------------------------
+    public void supprimerConsultation(Consultation consultation) {
         EntityManager em = JpaUtil.obtenirContextePersistance();
         em.remove(consultation);
     }

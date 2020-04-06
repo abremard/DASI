@@ -10,12 +10,14 @@ import javax.persistence.TypedQuery;
  * @author DASI Team
  */
 public class MediumDao {
-    
+
+    // --------------------------CREATE----------------------------    
     public void creer(Medium medium) {
         EntityManager em = JpaUtil.obtenirContextePersistance();
         em.persist(medium);
     }
-    
+
+    // --------------------------READ----------------------------    
     public Medium chercherParId(Long mediumId) {
         EntityManager em = JpaUtil.obtenirContextePersistance();
         return em.find(Medium.class, mediumId); // renvoie null si l'identifiant n'existe pas
@@ -38,7 +40,13 @@ public class MediumDao {
         TypedQuery<Medium> query = em.createQuery("SELECT c FROM Medium c ORDER BY c.nom ASC, c.prenom ASC", Medium.class);
         return query.getResultList();
     }
+    // --------------------------UPDATE----------------------------    
+    public Medium modifierConsultation(Medium medium) {
+        EntityManager em = JpaUtil.obtenirContextePersistance();
+        return em.merge(medium);
+    }
 
+    // --------------------------DELETE----------------------------        
     public void supprimerMedium(Medium medium, String SigneZodiac, String SigneAstro, String CouleurBonheur, String AnimalTotem) {
         EntityManager em = JpaUtil.obtenirContextePersistance();
         em.remove(medium);

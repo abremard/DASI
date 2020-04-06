@@ -41,7 +41,6 @@ public class Client implements Serializable {
         this.adresse = adresse;
         this.telephone = telephone;
         this.motDePasse = motDePasse;
-        
     }
 
     public Long getId() {
