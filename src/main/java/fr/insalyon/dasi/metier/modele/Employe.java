@@ -31,9 +31,7 @@ public class Employe implements Serializable {
     private String telephone;
     private String motDePasse;
     private int nbConsultation;
-    @OneToMany
-    private List<Consultation> HistoriqueConsultations;
-    
+
     protected Employe() {
     }
 

@@ -11,22 +11,32 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 /**
  *
  * @author Iyad
  */
+
 @Entity
 public class Consultation implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String commentaire;
+    private Statut statut;
     @Temporal(TemporalType.TIMESTAMP)
     private Date temps;
-
+    @ManyToOne
+    private Client client;
+    @ManyToOne
+    private Employe employe;
+    @ManyToOne
+    private Medium medium;
+    
     public Consultation() {
+        this.statut = Statut.PENDING;
     }
 
     public Consultation(String commentaire) {
@@ -41,12 +51,20 @@ public class Consultation implements Serializable {
         return temps;
     }
 
+    public Statut getStatut() {
+        return statut;
+    }
+
     public String getCommentaire() {
         return commentaire;
     }
 
     public void setCommentaire(String commentaire) {
         this.commentaire = commentaire;
+    }
+
+    public void setStatut(Statut statut) {
+        this.statut = statut;
     }
     
 }

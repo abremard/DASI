@@ -48,9 +48,15 @@ public class MediumDao {
         return query.getResultList();
     }
     
+     public Medium modifierMedium(Medium medium) {
+        EntityManager em = JpaUtil.obtenirContextePersistance();
+        return em.merge(medium);
+    }
+    
     public void supprimerMedium(Medium medium, String SigneZodiac, String SigneAstro, String CouleurBonheur, String AnimalTotem) { //pourquoi besoin des autres parametres? QQ
         EntityManager em = JpaUtil.obtenirContextePersistance();
         em.remove(medium);
     }
 
 }
+

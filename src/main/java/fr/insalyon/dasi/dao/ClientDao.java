@@ -39,8 +39,6 @@ public class ClientDao {
         TypedQuery<Client> query = em.createQuery("SELECT c FROM Client c ORDER BY c.nom ASC, c.prenom ASC", Client.class);
         return query.getResultList();
     }
-
-    
     
     public void ajouterProfilAstral(Client client, List<String> profilAstral) {
         EntityManager em = JpaUtil.obtenirContextePersistance();
@@ -56,4 +54,8 @@ public class ClientDao {
         em.remove(client);
     }
 
+    public Client modifierClient(Client client) {
+        EntityManager em = JpaUtil.obtenirContextePersistance();
+        return em.merge(client);
+    }
 }

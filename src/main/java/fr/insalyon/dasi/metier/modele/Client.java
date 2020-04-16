@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 
+
 /**
  *
  * @author DASI Team
@@ -35,7 +36,7 @@ public class Client implements Serializable {
     private String couleurBonheur; 
     private String animalTotem;
     private String motDePasse;
-    @OneToMany
+    @OneToMany(mappedBy="client")
     private List<Consultation> HistoriqueConsultations;
     public Client() {
     }
