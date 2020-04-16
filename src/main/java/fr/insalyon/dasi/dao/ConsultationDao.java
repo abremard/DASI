@@ -49,4 +49,18 @@ public class ConsultationDao {
         em.remove(consultation);
     }
 
+    public List<Consultation> listerConsultations() {
+        EntityManager em = JpaUtil.obtenirContextePersistance();
+        TypedQuery<Consultation> query = em.createQuery("SELECT c FROM Consultation c ORDER BY c.nom ASC, c.prenom ASC", Consultation.class);
+        return query.getResultList();
+    }
+
+    public List<Consultation> ConsulterHistoriqueConsultation(String mail) { // QQ comment trouver la liste des consultations d'un client precis?
+        EntityManager em = JpaUtil.obtenirContextePersistance();
+        TypedQuery<Consultation> query = em.createQuery("SELECT c FROM Consultation c WHERE c.mail = :mail", Consultation.class);
+        query.setParameter("mail", mail);
+        return query.getResultList();
+    }
+
+
 }

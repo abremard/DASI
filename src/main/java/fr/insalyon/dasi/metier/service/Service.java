@@ -100,7 +100,7 @@ public class Service {
             if (client != null) {
                 // Vérification du mot de passe
                 if (client.getMotDePasse().equals(motDePasse)) {
-                    resultat = true;
+                    resultat = client;
                 }
             } else {
                 // Recherche de l'employé
@@ -108,13 +108,12 @@ public class Service {
                 if (employe != null) {
                     // Vérification du mot de passe
                     if (employe.getMotDePasse().equals(motDePasse)) {
-                        resultat = true;
+                        resultat = client;
                     }
                 }
             }
         } catch (Exception ex) {
             Logger.getAnonymousLogger().log(Level.WARNING, "Exception lors de l'appel au Service authentifierClient(mail,motDePasse)", ex);
-            resultat = false;
         } finally {
             JpaUtil.fermerContextePersistance();
         }
@@ -245,6 +244,72 @@ public class Service {
             JpaUtil.fermerContextePersistance();
         }
         return profilAstral;
+    }
+    public List<Medium> listerMediumParType(String leType) {	
+        List<Medium> resultat = null;	
+        JpaUtil.creerContextePersistance();	
+        try {	
+            resultat = mediumDao.listerMediumsParType(leType);	
+        } catch (Exception ex) {	
+            Logger.getAnonymousLogger().log(Level.WARNING, "Exception lors de l'appel au Service listerMediumParType()", ex);	
+            resultat = null;	
+        } finally {	
+            JpaUtil.fermerContextePersistance();	
+        }	
+        return resultat;	
+    }	
+    public List<Consultation> ConsulterHistoriqueConsultation(String mail) {	
+        List<Consultation> resultat = null;	
+        JpaUtil.creerContextePersistance();	
+        try {	
+            resultat = consultationDao.ConsulterHistoriqueConsultation(mail);	
+        } catch (Exception ex) {	
+            Logger.getAnonymousLogger().log(Level.WARNING, "Exception lors de l'appel au Service ConsulterHistoriqueConsultation()", ex);	
+            resultat = null;	
+        } finally {	
+            JpaUtil.fermerContextePersistance();	
+        }	
+        return resultat;	
+    }	
+    public Client ConsulterProfilClient(String mail) {	
+        Client resultat = new Client();	
+        JpaUtil.creerContextePersistance();	
+        try {	
+            resultat = clientDao.chercherParMail(mail);	
+        } catch (Exception ex) {	
+            Logger.getAnonymousLogger().log(Level.WARNING, "Exception lors de l'appel au Service ConsulterProfilClient()", ex);	
+            resultat = null;	
+        } finally {	
+            JpaUtil.fermerContextePersistance();	
+        }	
+        return resultat;	
+    }	
+    public Medium afficherDetailsMedium(String denomination) {	
+        Medium resultat = new Medium();	
+        JpaUtil.creerContextePersistance();	
+        try {	
+            resultat = mediumDao.chercherMediumParDenomination(denomination);	
+        } catch (Exception ex) {	
+            Logger.getAnonymousLogger().log(Level.WARNING, "Exception lors de l'appel au Service chercherMediumParDenomination()", ex);	
+            resultat = null;	
+        } finally {	
+            JpaUtil.fermerContextePersistance();	
+        }	
+        return resultat;	
+    }	
+    public void remplirProfilAstral(Client client) throws IOException {	
+        List<String> profilAstral = this.astroTest.getProfil(client.getPrenom(), client.getDateDeNaissance());	
+        JpaUtil.creerContextePersistance();	
+        try {	
+            JpaUtil.ouvrirTransaction();	
+            clientDao.ajouterProfilAstral(client, profilAstral);	
+            JpaUtil.validerTransaction();	
+        } catch (Exception ex) {	
+            Logger.getAnonymousLogger().log(Level.WARNING, "Exception lors de l'appel au Service remplirProfilAstral(client)", ex);	
+            JpaUtil.annulerTransaction();	
+        } finally {	
+            JpaUtil.fermerContextePersistance();	
+        }	
     }   
 
 }
