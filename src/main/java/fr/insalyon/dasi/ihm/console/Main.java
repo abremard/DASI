@@ -170,47 +170,57 @@ public class Main {
         }
     }
 
-    // public static void testerAuthentificationClient() {
+    public static void testerAuthentificationClient() {
         
-    //     System.out.println();
-    //     System.out.println("**** testerAuthentificationClient() ****");
-    //     System.out.println();
+        System.out.println();
+        System.out.println("**** testerAuthentificationClient() ****");
+        System.out.println();
         
-    //     Service service = new Service();
-    //     Client client;
-    //     String mail;
-    //     String motDePasse;
+        Service service = new Service();
+        Client client;
+        String mail;
+        String motDePasse;
 
-    //     mail = "claude.chappe@insa-lyon.fr";
-    //     motDePasse = "mdp1";
-    //     client = service.authentifierClient(mail, motDePasse);
-    //     if (client != null) {
-    //         System.out.println("Authentification réussie avec le mail '" + mail + "' et le mot de passe '" + motDePasse + "'");
-    //         afficherClient(client);
-    //     } else {
-    //         System.out.println("Authentification échouée avec le mail '" + mail + "' et le mot de passe '" + motDePasse + "'");
-    //     }
+        mail = "claude.chappe@insa-lyon.fr";
+        motDePasse = "mdp1";
+        client = service.authentifierClient(mail, motDePasse);
+        if (client != null) {
+            System.out.println("Authentification réussie avec le mail '" + mail + "' et le mot de passe '" + motDePasse + "'");
+            afficherClient(client);
+        } else {
+            System.out.println("Authentification échouée avec le mail '" + mail + "' et le mot de passe '" + motDePasse + "'");
+        }
 
-    //     mail = "claude.chappe@insa-lyon.fr";
-    //     motDePasse = "mdp2";
-    //     client = service.authentifierClient(mail, motDePasse);
-    //     if (client != null) {
-    //         System.out.println("Authentification réussie avec le mail '" + mail + "' et le mot de passe '" + motDePasse + "'");
-    //         afficherClient(client);
-    //     } else {
-    //         System.out.println("Authentification échouée avec le mail '" + mail + "' et le mot de passe '" + motDePasse + "'");
-    //     }
+        mail = "claude.chappe@insa-lyon.fr";
+        motDePasse = "mdp2";
+        client = service.authentifierClient(mail, motDePasse);
+        if (client != null) {
+            System.out.println("Authentification réussie avec le mail '" + mail + "' et le mot de passe '" + motDePasse + "'");
+            afficherClient(client);
+        } else {
+            System.out.println("Authentification échouée avec le mail '" + mail + "' et le mot de passe '" + motDePasse + "'");
+        }
 
-    //     mail = "etudiant.fictif@insa-lyon.fr";
-    //     motDePasse = "********";
-    //     client = service.authentifierClient(mail, motDePasse);
-    //     if (client != null) {
-    //         System.out.println("Authentification réussie avec le mail '" + mail + "' et le mot de passe '" + motDePasse + "'");
-    //         afficherClient(client);
-    //     } else {
-    //         System.out.println("Authentification échouée avec le mail '" + mail + "' et le mot de passe '" + motDePasse + "'");
-    //     }
-    // }
+        mail = "hlamarr@insa-lyon.fr";
+        motDePasse = "mdp2";
+        client = service.authentifierClient(mail, motDePasse);
+        if (client != null) {
+            System.out.println("Authentification réussie avec le mail '" + mail + "' et le mot de passe '" + motDePasse + "'");
+            afficherClient(client);
+        } else {
+            System.out.println("Authentification échouée avec le mail '" + mail + "' et le mot de passe '" + motDePasse + "'");
+        }
+
+        mail = "hlamarr@insa-lyon.fr";
+        motDePasse = "****";
+        client = service.authentifierClient(mail, motDePasse);
+        if (client != null) {
+            System.out.println("Authentification réussie avec le mail '" + mail + "' et le mot de passe '" + motDePasse + "'");
+            afficherClient(client);
+        } else {
+            System.out.println("Authentification échouée avec le mail '" + mail + "' et le mot de passe '" + motDePasse + "'");
+        }
+    }
 
         // public static void initialiserClients() {
 

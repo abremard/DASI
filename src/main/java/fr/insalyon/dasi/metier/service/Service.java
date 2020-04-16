@@ -91,8 +91,8 @@ public class Service {
         return resultat;
     }
 
-    public Boolean authentifierClient(String mail, String motDePasse) {
-        Boolean resultat = null;
+    public Client authentifierClient(String mail, String motDePasse) {
+        Client resultat = null;
         JpaUtil.creerContextePersistance();
         try {
             // Recherche du client
