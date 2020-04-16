@@ -42,6 +42,7 @@ public class ConsultationDao {
     public List<Consultation> ConsulterHistoriqueConsultation(String mail) { // QQ comment trouver la liste des consultations d'un client precis?
         EntityManager em = JpaUtil.obtenirContextePersistance();
         TypedQuery<Consultation> query = em.createQuery("SELECT c FROM Consultation c WHERE c.mail = :mail", Consultation.class);
+        query.setParameter("mail", mail);
         return query.getResultList();
     }
     
