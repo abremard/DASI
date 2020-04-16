@@ -2,12 +2,15 @@ package fr.insalyon.dasi.metier.modele;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
 
 /**
  *
@@ -21,6 +24,7 @@ public class Client implements Serializable {
     private Long id;
     private String nom;
     private String prenom;
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date dateDeNaissance;
     @Column(unique = true)
     private String mail;
@@ -31,10 +35,12 @@ public class Client implements Serializable {
     private String couleurBonheur; 
     private String animalTotem;
     private String motDePasse;
-    protected Client() {
+    @OneToMany
+    private List<Consultation> HistoriqueConsultations;
+    public Client() {
     }
 
-    public Client(String nom, String prenom, String mail, String adresse, String telephone, String motDePasse) {
+    public Client(String nom, String prenom, String mail, String adresse, String telephone, String motDePasse) { //JUSTE POUR TEST, A REMPLACER 
         this.nom = nom;
         this.prenom = prenom;
         this.mail = mail;
@@ -43,7 +49,17 @@ public class Client implements Serializable {
         this.motDePasse = motDePasse;
         
     }
-
+    /*public Client(String nom, String prenom, String mail, String adresse, String telephone, String motDePasse, Date dateDeNaissance) { //A BIEN IMPLEMENTER
+        this.nom = nom;
+        this.prenom = prenom;
+        this.mail = mail;
+        this.adresse = adresse;
+        this.telephone = telephone;
+        this.motDePasse = motDePasse;
+        this.dateDeNaissance = dateDeNaissance;
+        
+    }*/
+    
     public Long getId() {
         return id;
     }

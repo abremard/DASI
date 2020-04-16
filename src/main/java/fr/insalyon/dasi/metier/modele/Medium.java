@@ -6,10 +6,12 @@
 package fr.insalyon.dasi.metier.modele;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -25,7 +27,9 @@ public class Medium implements Serializable {
     private String denomination;
     private String genre;
     private String presentation;
-
+    @OneToMany
+    private List<Consultation> HistoriqueConsultations;
+    
     public Medium() {
     }
 

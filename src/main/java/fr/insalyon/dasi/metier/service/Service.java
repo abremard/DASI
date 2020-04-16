@@ -99,6 +99,62 @@ public class Service {
         return resultat;
     }
 
+    public List<Medium> listerMediumParType(String leType) {
+        List<Medium> resultat = null;
+        JpaUtil.creerContextePersistance();
+        try {
+            resultat = mediumDao.listerMediumsParType(leType);
+        } catch (Exception ex) {
+            Logger.getAnonymousLogger().log(Level.WARNING, "Exception lors de l'appel au Service listerMediumParType()", ex);
+            resultat = null;
+        } finally {
+            JpaUtil.fermerContextePersistance();
+        }
+        return resultat;
+    }
+    
+    public List<Consultation> ConsulterHistoriqueConsultation(String mail) {
+        List<Consultation> resultat = null;
+        JpaUtil.creerContextePersistance();
+        try {
+            resultat = consultationDao.ConsulterHistoriqueConsultation(mail);
+        } catch (Exception ex) {
+            Logger.getAnonymousLogger().log(Level.WARNING, "Exception lors de l'appel au Service ConsulterHistoriqueConsultation()", ex);
+            resultat = null;
+        } finally {
+            JpaUtil.fermerContextePersistance();
+        }
+        return resultat;
+    }
+    
+    public Client ConsulterProfilClient(String mail) {
+        Client resultat = new Client();
+        JpaUtil.creerContextePersistance();
+        try {
+            resultat = clientDao.chercherParMail(mail);
+        } catch (Exception ex) {
+            Logger.getAnonymousLogger().log(Level.WARNING, "Exception lors de l'appel au Service ConsulterProfilClient()", ex);
+            resultat = null;
+        } finally {
+            JpaUtil.fermerContextePersistance();
+        }
+        return resultat;
+    }
+    
+    public Medium afficherDetailsMedium(String denomination) {
+        Medium resultat = new Medium();
+        JpaUtil.creerContextePersistance();
+        try {
+            resultat = mediumDao.chercherMediumParDenomination(denomination);
+        } catch (Exception ex) {
+            Logger.getAnonymousLogger().log(Level.WARNING, "Exception lors de l'appel au Service chercherMediumParDenomination()", ex);
+            resultat = null;
+        } finally {
+            JpaUtil.fermerContextePersistance();
+        }
+        return resultat;
+    }
+    
     public void remplirProfilAstral(Client client) throws IOException {
         List<String> profilAstral = this.astroTest.getProfil(client.getPrenom(), client.getDateDeNaissance());
         JpaUtil.creerContextePersistance();

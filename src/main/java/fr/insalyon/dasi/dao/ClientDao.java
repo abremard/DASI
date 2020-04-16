@@ -1,6 +1,7 @@
 package fr.insalyon.dasi.dao;
 
 import fr.insalyon.dasi.metier.modele.Client;
+import fr.insalyon.dasi.metier.modele.Consultation;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -20,7 +21,7 @@ public class ClientDao {
         EntityManager em = JpaUtil.obtenirContextePersistance();
         return em.find(Client.class, clientId); // renvoie null si l'identifiant n'existe pas
     }
-    
+ 
     public Client chercherParMail(String clientMail) {
         EntityManager em = JpaUtil.obtenirContextePersistance();
         TypedQuery<Client> query = em.createQuery("SELECT c FROM Client c WHERE c.mail = :mail", Client.class);
@@ -39,6 +40,8 @@ public class ClientDao {
         return query.getResultList();
     }
 
+    
+    
     public void ajouterProfilAstral(Client client, List<String> profilAstral) {
         EntityManager em = JpaUtil.obtenirContextePersistance();
         em.persist(client);
