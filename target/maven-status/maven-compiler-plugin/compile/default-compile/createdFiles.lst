@@ -1,5 +1,6 @@
 fr\insalyon\dasi\dao\JpaUtil.class
 fr\insalyon\dasi\metier\modele\Employe.class
+<<<<<<< HEAD
 fr\insalyon\dasi\metier\modele\Employe_.class
 util\AstroTest.class
 fr\insalyon\dasi\dao\ConsultationDao.class
@@ -18,4 +19,30 @@ fr\insalyon\dasi\dao\EmployeDao.class
 fr\insalyon\dasi\ihm\console\Main.class
 fr\insalyon\dasi\ihm\console\Saisie.class
 fr\insalyon\dasi\metier\modele\Client_.class
+=======
+fr\insalyon\dasi\metier\modele\Cartomancien_.class
+fr\insalyon\dasi\metier\modele\Employe_.class
+fr\insalyon\dasi\metier\modele\Spirite_.class
+util\AstroTest.class
+fr\insalyon\dasi\metier\modele\Consultation_.class
+fr\insalyon\dasi\dao\MediumDao.class
+fr\insalyon\dasi\metier\modele\Medium.class
+fr\insalyon\dasi\metier\modele\Astrologue.class
+fr\insalyon\dasi\metier\modele\Medium_.class
+fr\insalyon\dasi\dao\EmployeDao.class
+fr\insalyon\dasi\metier\modele\Client_.class
+fr\insalyon\dasi\metier\modele\Cartomancien.class
+fr\insalyon\dasi\metier\modele\Employes.class
+fr\insalyon\dasi\metier\modele\Astrologue_.class
+fr\insalyon\dasi\dao\ConsultationDao.class
+fr\insalyon\dasi\metier\service\Service.class
+util\Message.class
+fr\insalyon\dasi\metier\modele\Client.class
+fr\insalyon\dasi\dao\ClientDao.class
+fr\insalyon\dasi\metier\modele\Employes_.class
+fr\insalyon\dasi\dao\JpaUtil$1.class
+fr\insalyon\dasi\metier\modele\Consultation.class
+fr\insalyon\dasi\ihm\console\Main.class
+fr\insalyon\dasi\ihm\console\Saisie.class
+>>>>>>> a94a8f1d61947f83f207d0284e1da3b2c3a6631d
 fr\insalyon\dasi\metier\modele\Spirite.class

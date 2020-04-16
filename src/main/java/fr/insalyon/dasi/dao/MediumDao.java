@@ -11,45 +11,52 @@ import javax.persistence.TypedQuery;
  */
 public class MediumDao {
 
-    // --------------------------CREATE----------------------------    
     public void creer(Medium medium) {
         EntityManager em = JpaUtil.obtenirContextePersistance();
         em.persist(medium);
     }
-
-    // --------------------------READ----------------------------    
+    
     public Medium chercherParId(Long mediumId) {
         EntityManager em = JpaUtil.obtenirContextePersistance();
         return em.find(Medium.class, mediumId); // renvoie null si l'identifiant n'existe pas
     }
     
-    public Medium chercherParMail(String mediumMail) {
+    public Medium chercherMediumParDenomination(String denomination) {
         EntityManager em = JpaUtil.obtenirContextePersistance();
-        TypedQuery<Medium> query = em.createQuery("SELECT c FROM Medium c WHERE c.mail = :mail", Medium.class);
-        query.setParameter("mail", mediumMail); // correspond au paramètre ":mail" dans la requête
-        List<Medium> Mediums = query.getResultList();
-        Medium result = null;
-        if (!Mediums.isEmpty()) {
-            result = Mediums.get(0); // premier de la liste
-        }
-        return result;
+        TypedQuery<Medium> query = em.createQuery("SELECT c FROM Medium c WHERE c.denomination = :denomination", Medium.class);
+        query.setParameter("denomination", denomination); // correspond au paramètre ":denomination" dans la requête
+        Medium resultat = (Medium) query.getSingleResult();
+        return resultat;
     }
     
     public List<Medium> listerMediums() {
         EntityManager em = JpaUtil.obtenirContextePersistance();
-        TypedQuery<Medium> query = em.createQuery("SELECT c FROM Medium c ORDER BY c.nom ASC, c.prenom ASC", Medium.class);
+        TypedQuery<Medium> query = em.createQuery("SELECT c FROM Medium c ORDER BY c.denomination ASC", Medium.class);
         return query.getResultList();
     }
-    // --------------------------UPDATE----------------------------    
-    public Medium modifierConsultation(Medium medium) {
+
+    public List<Medium> listerMediumsParType(String leType) {
+        EntityManager em = JpaUtil.obtenirContextePersistance();
+        TypedQuery<Medium> query = em.createQuery("SELECT DISTINCT (c.denomination) FROM Medium c WHERE c.type = :leType ORDER BY c.denomination ASC", Medium.class);
+        query.setParameter("leType", leType); // correspond au paramètre ":leType" dans la requête
+        List<Medium> Mediums = query.getResultList();
+        return query.getResultList();
+    }
+    public List<Medium> listerTypeMedium() {
+        EntityManager em = JpaUtil.obtenirContextePersistance();
+        TypedQuery<Medium> query = em.createQuery("SELECT DISTINCT (c.type) FROM Medium c WHERE c. ORDER BY c.denomination ASC", Medium.class);
+        return query.getResultList();
+    }
+    
+     public Medium modifierMedium(Medium medium) {
         EntityManager em = JpaUtil.obtenirContextePersistance();
         return em.merge(medium);
     }
-
-    // --------------------------DELETE----------------------------        
-    public void supprimerMedium(Medium medium, String SigneZodiac, String SigneAstro, String CouleurBonheur, String AnimalTotem) {
+    
+    public void supprimerMedium(Medium medium, String SigneZodiac, String SigneAstro, String CouleurBonheur, String AnimalTotem) { //pourquoi besoin des autres parametres? QQ
         EntityManager em = JpaUtil.obtenirContextePersistance();
         em.remove(medium);
     }
 
 }
+
