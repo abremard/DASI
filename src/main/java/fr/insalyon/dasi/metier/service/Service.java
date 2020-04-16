@@ -13,7 +13,7 @@ import fr.insalyon.dasi.metier.modele.Consultation;
 import fr.insalyon.dasi.metier.modele.Statut;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 
 import util.AstroTest;
@@ -34,10 +34,8 @@ public class Service {
 
     protected AstroTest astroTest = new AstroTest();
 
-    public Long inscrireClient(String nom, String prenom, Date dateDeNaissance, String adresse, String mail, String telephone, String motDePasse)
-            throws IOException {
+    public Long inscrireClient(Client client) throws IOException {
         Long resultat = null;
-        Client client = new Client(nom, prenom, mail, adresse, telephone, motDePasse);
         List<String> profilAstral = this.astroTest.getProfil(client.getPrenom(), client.getDateDeNaissance());
         client.setSigneZodiaque(profilAstral.get(0));
         client.setSigneAstro(profilAstral.get(1));
@@ -51,6 +49,26 @@ public class Service {
             resultat = client.getId();
         } catch (Exception ex) {
             Logger.getAnonymousLogger().log(Level.WARNING, "Exception lors de l'appel au Service inscrireClient(client)", ex);
+            JpaUtil.annulerTransaction();
+            resultat = null;
+        } finally {
+            JpaUtil.fermerContextePersistance();
+        }
+        return resultat;
+    }
+
+    public Consultation DemanderConsultation(Client client) throws IOException {
+        Consultation resultat = null;
+        JpaUtil.creerContextePersistance();
+        try {
+            Consultation consultation = new Consultation(); // ADAPTER A ORM
+            System.out.println(consultation.getStatut());
+            JpaUtil.ouvrirTransaction();
+            consultationDao.creer(consultation);
+            JpaUtil.validerTransaction();
+            resultat = consultation;
+        } catch (Exception ex) {
+            Logger.getAnonymousLogger().log(Level.WARNING, "Exception lors de l'appel au Service DemanderConsultation(client)", ex);
             JpaUtil.annulerTransaction();
             resultat = null;
         } finally {
@@ -162,21 +180,6 @@ public class Service {
         "Message : Bonjour " + employe.getPrenom() + ". Consultation requise pour " + client.getPrenom() + " " + client.getNom() + ". Médium à incarner : " + medium.getDenomination();
         JpaUtil.creerContextePersistance();
         return message;
-    }
-
-    public void DemanderConsultation(Client client) throws IOException {
-        JpaUtil.creerContextePersistance();
-        try {
-            Consultation consultation = new Consultation(); // ADAPTER A ORM
-            JpaUtil.ouvrirTransaction();
-            consultationDao.creer(consultation);
-            JpaUtil.validerTransaction();
-        } catch (Exception ex) {
-            Logger.getAnonymousLogger().log(Level.WARNING, "Exception lors de l'appel au Service DemanderConsultation(client)", ex);
-            JpaUtil.annulerTransaction();
-        } finally {
-            JpaUtil.fermerContextePersistance();
-        }
     }
 
     public void SignalerDebutConsultation(String employeMail) throws IOException {

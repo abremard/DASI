@@ -30,10 +30,8 @@ public class Consultation implements Serializable {
 
     public Consultation() {
         this.statut = Statut.PENDING;
-    }
-
-    public Consultation(String commentaire) {
-        this.commentaire = commentaire;
+        this.commentaire = "";
+        this.temps = new Date();
     }
 
     public Long getId() {
@@ -60,4 +58,13 @@ public class Consultation implements Serializable {
         this.statut = statut;
     }
     
+    @Override
+    public String toString() {
+        return 
+            "Consultation : id=" + id +
+            ", commentaire=" + commentaire +
+            ", statut=" + statut +
+            ", temps=" + temps.toString();
+    }
+
 }

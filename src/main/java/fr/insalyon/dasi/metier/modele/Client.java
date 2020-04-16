@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -21,6 +23,7 @@ public class Client implements Serializable {
     private Long id;
     private String nom;
     private String prenom;
+    @Temporal(TemporalType.TIMESTAMP)
     private Date dateDeNaissance;
     @Column(unique = true)
     private String mail;
@@ -34,9 +37,10 @@ public class Client implements Serializable {
     protected Client() {
     }
 
-    public Client(String nom, String prenom, String mail, String adresse, String telephone, String motDePasse) {
+    public Client(String nom, String prenom, Date dateDeNaissance, String mail, String adresse, String telephone, String motDePasse) {
         this.nom = nom;
         this.prenom = prenom;
+        this.dateDeNaissance = dateDeNaissance;
         this.mail = mail;
         this.adresse = adresse;
         this.telephone = telephone;
@@ -137,7 +141,17 @@ public class Client implements Serializable {
 
     @Override
     public String toString() {
-        return "Client : id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", mail=" + mail + ", motDePasse=" + motDePasse;
+        return 
+            "Client : id=" + id +
+            ", nom=" + nom +
+            ", prenom=" + prenom +
+            ", date=" + dateDeNaissance.toString() +
+            ", mail=" + mail +
+            ", motDePasse=" + motDePasse +
+            ", signeZodiaque=" + signeZodiaque +
+            ", signeAstro=" + signeAstro +
+            ", couleurBonheur=" + couleurBonheur +
+            ", animalTotem=" + animalTotem;
     }
     
 
