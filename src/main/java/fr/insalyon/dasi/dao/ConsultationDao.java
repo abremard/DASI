@@ -21,18 +21,6 @@ public class ConsultationDao {
         return em.find(Consultation.class, consultationId); // renvoie null si l'identifiant n'existe pas
     }
     
-    public Consultation chercherParMail(String consultationMail) {
-        EntityManager em = JpaUtil.obtenirContextePersistance();
-        TypedQuery<Consultation> query = em.createQuery("SELECT c FROM Consultation c WHERE c.mail = :mail", Consultation.class);
-        query.setParameter("mail", consultationMail); // correspond au paramètre ":mail" dans la requête
-        List<Consultation> Consultations = query.getResultList();
-        Consultation result = null;
-        if (!Consultations.isEmpty()) {
-            result = Consultations.get(0); // premier de la liste
-        }
-        return result;
-    }
-    
     public void setCommentaire(Consultation consultation, String commentaire) {
         EntityManager em = JpaUtil.obtenirContextePersistance();
         em.persist(consultation);
@@ -55,6 +43,7 @@ public class ConsultationDao {
         return query.getResultList();
     }
 
+    // Voir avec ORM
     public List<Consultation> ConsulterHistoriqueConsultation(String mail) { // QQ comment trouver la liste des consultations d'un client precis?
         EntityManager em = JpaUtil.obtenirContextePersistance();
         TypedQuery<Consultation> query = em.createQuery("SELECT c FROM Consultation c WHERE c.mail = :mail", Consultation.class);

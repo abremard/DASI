@@ -24,6 +24,7 @@ public class Employe implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private Boolean disponible;
     private String nom;
     private String prenom;
     @Column(unique = true)
@@ -41,6 +42,7 @@ public class Employe implements Serializable {
         this.mail = mail;
         this.telephone = telephone;
         this.motDePasse = motDePasse;
+        this.disponible = true;
     }
 
     public Long getId() {
@@ -93,6 +95,19 @@ public class Employe implements Serializable {
 
     public void setNbConsultation(int nbConsultation) {
         this.nbConsultation = nbConsultation;
+    }
+
+    @Override
+    public String toString() {
+        return 
+            "Employe : id=" + id +
+            ", disponible=" + disponible +
+            ", nom=" + nom +
+            ", prenom=" + prenom +
+            ", mail=" + mail +
+            ", telephone=" + telephone +
+            ", motDePasse=" + motDePasse +
+            ", nbConsultation=" + nbConsultation;
     }
     
 }

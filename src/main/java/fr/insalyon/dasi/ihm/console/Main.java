@@ -1,19 +1,16 @@
 package fr.insalyon.dasi.ihm.console;
 
-import fr.insalyon.dasi.dao.JpaUtil;
-import fr.insalyon.dasi.metier.modele.Client;
-import fr.insalyon.dasi.metier.modele.Consultation;
-import fr.insalyon.dasi.metier.service.Service;
-
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+
+import fr.insalyon.dasi.dao.JpaUtil;
+import fr.insalyon.dasi.metier.modele.Client;
+import fr.insalyon.dasi.metier.modele.Consultation;
+import fr.insalyon.dasi.metier.modele.Employe;
+import fr.insalyon.dasi.metier.modele.Medium;
+import fr.insalyon.dasi.metier.service.Service;
 
 /**
  *
@@ -33,7 +30,7 @@ public class Main {
         // saisirRechercheClient();
 
         // INSCRIRE CLIENT 
-        // testerInscriptionClient(); // Cas normal
+        // f(); // Cas normal
         // testerDuplicatMailInscription;
 
         // DEMANDER CONSULTATION
@@ -43,7 +40,31 @@ public class Main {
         // testerRechercheClient(); // 2 cas normaux + 1 cas anormal
 
         // AUTHENTIFIER CLIENT
-        // testerAuthentificationClient(); // 
+        // testerAuthentificationClient();
+
+        // LISTER CLIENT
+        // testerListerClients();
+
+        // ENVOYER MAIL CONFIRMATION INSCRIPTION
+        // testerEnvoyerMailConfirmationInscription();
+
+        // ENVOYER MESSAGE DEMANDE CONSULTATION
+        // testerEnvoyerMessageDemandeConsultation(); 
+
+        // ENVOYER MESSAGE CONSULTATION
+        // testerEnvoyerMessageConsultation();
+
+        // PREDICTION AIDE
+        // testerPredictionsAide();
+
+        // SELECTION AUTOMATIQUE EMPLOYE
+        // testerSelectionAutomatiqueEmploye();
+
+        // CONSULTER PROFIL EMPLOYE
+        // testerConsulterProfilEmploye();
+
+        // CONSULTER PROFIL CLIENT
+        testerConsulterProfilClient();
 
         JpaUtil.destroy();
     }
@@ -54,6 +75,10 @@ public class Main {
 
     public static void afficherConsultation(Consultation consultation) {
         System.out.println("-> " + consultation.toString());
+    }
+
+    public static void afficherEmploye(Employe employe) {
+        System.out.println("-> " + employe.toString());
     }
 
     public static void testerInscriptionClient() {
@@ -220,6 +245,211 @@ public class Main {
         } else {
             System.out.println("Authentification échouée avec le mail '" + mail + "' et le mot de passe '" + motDePasse + "'");
         }
+    }
+
+    public static void testerListerClients() {
+        System.out.println();
+        System.out.println("**** testerListeClients() ****");
+        System.out.println();
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.clear();
+        calendar.set(1996,1,26);
+        Service service = new Service();
+        Client claude = new Client("Chappe", "Claude", calendar.getTime(), "claude.chappe@insa-lyon.fr",
+                "15 rue plolplo", "684318", "mdp1");
+        try {
+            service.inscrireClient(claude);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+        List<Client> listeClients = null;
+        try {
+            listeClients = service.listerClients();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println("*** Liste des Clients");
+        if (listeClients != null) {
+            for (Client client : listeClients) {
+                afficherClient(client);
+            }
+        }
+        else {
+            System.out.println("=> ERREUR...");
+        }
+    }
+
+    public static void testerEnvoyerMailConfirmationInscription() {
+
+        System.out.println();
+        System.out.println("**** testerEnvoyerMailConfirmationInscription() ****");
+        System.out.println();
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.clear();
+        calendar.set(1996,1,26);
+        Service service = new Service();
+        Client claude = new Client("Chappe", "Claude", calendar.getTime(), "claude.chappe@insa-lyon.fr",
+                "15 rue plolplo", "684318", "mdp1");
+        try {
+            String message = service.EnvoyerMailConfirmationInscription(claude);
+            System.out.println(message);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void testerEnvoyerMessageDemandeConsultation() {
+
+        System.out.println();
+        System.out.println("**** testerEnvoyerMessageDemandeConsultation() ****");
+        System.out.println();
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.clear();
+        calendar.set(1996,1,26);
+        Service service = new Service();
+        Client claude = new Client("Chappe", "Claude", calendar.getTime(), "claude.chappe@insa-lyon.fr",
+                "15 rue plolplo", "684318", "mdp1");
+        
+        Consultation consultation = new Consultation();
+
+        Employe pierre = new Employe("Michel", "Pierre", "pierre-michel@insa-lyon.fr", "878945", "mdp");
+
+        Medium azGul = new Medium("Necromancien","AzGul","Homme","Quand les vivants n'ont plus de réponses à vos questions, les morts ont toujours leur mot à dire...");
+
+        String mail = service.EnvoyerMessageDemandeConsultation(claude, pierre, azGul, consultation);
+
+        System.out.println(mail);
+    }
+
+    public static void testerEnvoyerMessageConsultation() {
+
+        System.out.println();
+        System.out.println("**** testerEnvoyerMessageConsultation() ****");
+        System.out.println();
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.clear();
+        calendar.set(1996,1,26);
+        Service service = new Service();
+        Client claude = new Client("Chappe", "Claude", calendar.getTime(), "claude.chappe@insa-lyon.fr",
+                "15 rue plolplo", "684318", "mdp1");
+        
+        Consultation consultation = new Consultation();
+
+        Employe pierre = new Employe("Michel", "Pierre", "pierre-michel@insa-lyon.fr", "878945", "mdp");
+
+        Medium azGul = new Medium("Necromancien","AzGul","Homme","Quand les vivants n'ont plus de réponses à vos questions, les morts ont toujours leur mot à dire...");
+
+        String mail = service.EnvoyerMessageConsultation(claude, pierre, azGul, consultation);
+
+        System.out.println(mail);
+
+    }
+
+    public static void testerPredictionsAide() {
+
+        System.out.println();
+        System.out.println("**** testerPredictionAide() ****");
+        System.out.println();
+
+        Service service = new Service();
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.clear();
+        calendar.set(1996,1,26);
+
+        Client claude = new Client("Chappe", "Claude", calendar.getTime(), "claude.chappe@insa-lyon.fr",
+                "15 rue plolplo", "684318", "mdp1");
+
+        int amour = 3;
+        int sante = 3;
+        int travail = 3;
+
+        List<String> prediction = null; 
+        
+        try {
+            prediction = service.PredictionsAide(claude.getCouleurBonheur(), claude.getAnimalTotem(), amour, sante, travail);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println(prediction);
+    }
+
+    public static void testerSelectionAutomatiqueEmploye() {
+
+        System.out.println();
+        System.out.println("**** testerSelectionAutomatiqueEmploye() ****");
+        System.out.println();
+
+        Service service = new Service();
+
+        Employe pierre = new Employe("Michel", "Pierre", "pierre-michel@insa-lyon.fr", "878945", "mdp");
+
+        try {
+            service.inscrireEmploye(pierre);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Employe retour = service.SelectionAutomatiqueEmploye();
+
+        afficherEmploye(retour);
+    }
+
+    public static void testerConsulterProfilEmploye() {
+
+        System.out.println();
+        System.out.println("**** testerConsulterProfilEmploye() ****");
+        System.out.println();
+        Calendar calendar = Calendar.getInstance();
+        calendar.clear();
+        calendar.set(1996,1,26);
+        Service service = new Service();
+        Client claude = new Client("Chappe", "Claude", calendar.getTime(), "claude.chappe@insa-lyon.fr",
+                "15 rue plolplo", "684318", "mdp1");
+        try {
+            service.inscrireClient(claude);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        List<String> profil = null;
+
+        try {
+            profil = service.ConsulterProfilEmploye(claude.getMail());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println(profil);
+
+    }
+
+    public static void testerConsulterProfilClient() {
+
+        System.out.println();
+        System.out.println("**** testerConsulterProfilClient() ****");
+        System.out.println();
+        Calendar calendar = Calendar.getInstance();
+        calendar.clear();
+        calendar.set(1996,1,26);
+        Service service = new Service();
+        Client claude = new Client("Chappe", "Claude", calendar.getTime(), "claude.chappe@insa-lyon.fr",
+                "15 rue plolplo", "684318", "mdp1");
+        try {
+            service.inscrireClient(claude);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Client client = service.ConsulterProfilClient(claude.getMail());
+
+        afficherClient(client);
+
     }
 
         // public static void initialiserClients() {

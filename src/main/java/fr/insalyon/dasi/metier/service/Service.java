@@ -57,6 +57,24 @@ public class Service {
         return resultat;
     }
 
+    public Long inscrireEmploye(Employe employe) throws IOException {
+        Long resultat = null;
+        JpaUtil.creerContextePersistance();
+        try {
+            JpaUtil.ouvrirTransaction();
+            employeDao.creer(employe);
+            JpaUtil.validerTransaction();
+            resultat = employe.getId();
+        } catch (Exception ex) {
+            Logger.getAnonymousLogger().log(Level.WARNING, "Exception lors de l'appel au Service inscrireEmplye(employe)", ex);
+            JpaUtil.annulerTransaction();
+            resultat = null;
+        } finally {
+            JpaUtil.fermerContextePersistance();
+        }
+        return resultat;
+    }
+
     public Consultation DemanderConsultation(Client client) throws IOException {
         Consultation resultat = null;
         JpaUtil.creerContextePersistance();
@@ -127,7 +145,6 @@ public class Service {
             resultat = clientDao.listerClients();
         } catch (Exception ex) {
             Logger.getAnonymousLogger().log(Level.WARNING, "Exception lors de l'appel au Service listerClients()", ex);
-            resultat = null;
         } finally {
             JpaUtil.fermerContextePersistance();
         }
@@ -135,7 +152,7 @@ public class Service {
     }
 
     // Envoyer un mail au client
-    public String envoyerMailConfirmationInscription(Client client) throws IOException {
+    public String EnvoyerMailConfirmationInscription(Client client) throws IOException {
         Client resultat = null;
         String message = 
         "Expéditeur : contact@predict.if" + System.lineSeparator() +
@@ -181,11 +198,10 @@ public class Service {
         return message;
     }
 
-    public void SignalerDebutConsultation(String employeMail) throws IOException {
+    public void SignalerDebutConsultation(Employe employe) throws IOException {
         JpaUtil.creerContextePersistance();
         try {
             JpaUtil.ouvrirTransaction();
-            Employe employe = employeDao.chercherParMail(employeMail);
             Consultation consultation = new Consultation(); // ADAPTER A ORM employe.getConsultation().getStatut == PENDING...
             consultation.setStatut(Statut.STARTED);
             consultationDao.modifierConsultation(consultation);
@@ -204,8 +220,16 @@ public class Service {
     }
 
     public Employe SelectionAutomatiqueEmploye() {
-        Employe employe = employeDao.SelectionEmployeDisponible();
-        return employe;
+        Employe resultat = null;
+        JpaUtil.creerContextePersistance();
+        try {
+            resultat = employeDao.SelectionEmployeDisponible();
+        } catch (Exception ex) {
+            Logger.getAnonymousLogger().log(Level.WARNING, "Exception lors de l'appel au Service rechercherClientParId(id)", ex);
+        } finally {
+            JpaUtil.fermerContextePersistance();
+        }
+        return resultat;
     }
 
     public void ValiderFinConsultation(String employeMail, String commentaire) throws IOException {
@@ -245,6 +269,7 @@ public class Service {
         }
         return profilAstral;
     }
+
     public List<Medium> listerMediumParType(String leType) {	
         List<Medium> resultat = null;	
         JpaUtil.creerContextePersistance();	
@@ -258,6 +283,7 @@ public class Service {
         }	
         return resultat;	
     }	
+
     public List<Consultation> ConsulterHistoriqueConsultation(String mail) {	
         List<Consultation> resultat = null;	
         JpaUtil.creerContextePersistance();	
@@ -271,6 +297,7 @@ public class Service {
         }	
         return resultat;	
     }	
+
     public Client ConsulterProfilClient(String mail) {	
         Client resultat = new Client();	
         JpaUtil.creerContextePersistance();	
@@ -283,7 +310,8 @@ public class Service {
             JpaUtil.fermerContextePersistance();	
         }	
         return resultat;	
-    }	
+    }
+
     public Medium afficherDetailsMedium(String denomination) {	
         Medium resultat = new Medium();	
         JpaUtil.creerContextePersistance();	
@@ -297,6 +325,7 @@ public class Service {
         }	
         return resultat;	
     }	
+
     public void remplirProfilAstral(Client client) throws IOException {	
         List<String> profilAstral = this.astroTest.getProfil(client.getPrenom(), client.getDateDeNaissance());	
         JpaUtil.creerContextePersistance();	
