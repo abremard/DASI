@@ -1,5 +1,10 @@
 target/
 target/generated-sources/annotations/fr/insalyon/dasi/metier/modele/Medium_.java
+target/generated-sources/annotations/fr/insalyon/dasi/metier/modele/Client_.java
+target/generated-sources/annotations/fr/insalyon/dasi/metier/modele/Astrologue_.java
+target/generated-sources/annotations/fr/insalyon/dasi/metier/modele/Cartomancien_.java
+target/generated-sources/annotations/fr/insalyon/dasi/metier/modele/Consultation_.java
+target/generated-sources/annotations/fr/insalyon/dasi/metier/modele/Sprite_.java
 target/generated-sources/annotations/fr/insalyon/dasi/metier/modele/Medium_.java
 target/generated-sources/annotations/fr/insalyon/dasi/metier/modele/Employe_.java
 target/generated-sources/annotations/fr/insalyon/dasi/metier/modele/Consultation_.java
