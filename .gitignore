@@ -1,4 +1,8 @@
 target/**
+DASI-TD2-Correction/target/**
+DASI-TD2-Correction/Tomcat-Installation/**
+DASI-TD2-Correction/Tomcat-Instance/**
+DASI-TD2-Correction/pom.xml
 target/generated-sources/annotations/fr/insalyon/dasi/metier/modele/Medium_.java
 target/generated-sources/annotations/fr/insalyon/dasi/metier/modele/Client_.java
 target/generated-sources/annotations/fr/insalyon/dasi/metier/modele/Astrologue_.java
