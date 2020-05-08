@@ -21,7 +21,7 @@ public class Main {
     public static void main(String[] args) {
 
         JpaUtil.init();
-
+        testerInscriptionClient();
         // initialiserClients(); // Question 3
 
         // testerListeClients(); // Question 7
@@ -64,7 +64,7 @@ public class Main {
         // testerConsulterProfilEmploye();
 
         // CONSULTER PROFIL CLIENT
-        testerConsulterProfilClient();
+        //testerConsulterProfilClient();
 
         JpaUtil.destroy();
     }
