@@ -1,37 +1,18 @@
-<<<<<<< HEAD
-D:\Documents\INSA_IF\DASI\Projet\src\main\java\fr\insalyon\dasi\metier\modele\Medium.java
-D:\Documents\INSA_IF\DASI\Projet\src\main\java\util\AstroTest.java
-D:\Documents\INSA_IF\DASI\Projet\src\main\java\fr\insalyon\dasi\metier\modele\Employe.java
-D:\Documents\INSA_IF\DASI\Projet\src\main\java\fr\insalyon\dasi\metier\modele\Statut.java
-D:\Documents\INSA_IF\DASI\Projet\src\main\java\fr\insalyon\dasi\dao\ClientDao.java
-D:\Documents\INSA_IF\DASI\Projet\src\main\java\fr\insalyon\dasi\ihm\console\Main.java
-D:\Documents\INSA_IF\DASI\Projet\src\main\java\fr\insalyon\dasi\metier\modele\Consultation.java
-D:\Documents\INSA_IF\DASI\Projet\src\main\java\fr\insalyon\dasi\dao\MediumDao.java
-D:\Documents\INSA_IF\DASI\Projet\src\main\java\util\Message.java
-D:\Documents\INSA_IF\DASI\Projet\src\main\java\fr\insalyon\dasi\ihm\console\Saisie.java
-D:\Documents\INSA_IF\DASI\Projet\src\main\java\fr\insalyon\dasi\dao\ConsultationDao.java
-D:\Documents\INSA_IF\DASI\Projet\src\main\java\fr\insalyon\dasi\dao\EmployeDao.java
-D:\Documents\INSA_IF\DASI\Projet\src\main\java\fr\insalyon\dasi\metier\service\Service.java
-D:\Documents\INSA_IF\DASI\Projet\src\main\java\fr\insalyon\dasi\dao\JpaUtil.java
-D:\Documents\INSA_IF\DASI\Projet\src\main\java\fr\insalyon\dasi\metier\modele\Client.java
-D:\Documents\INSA_IF\DASI\Projet\src\main\java\fr\insalyon\dasi\metier\modele\Spirite.java
-=======
-C:\Users\Iyad\Desktop\TP DASI\B3224\DASI-Projet\src\main\java\fr\insalyon\dasi\metier\modele\Medium.java
-C:\Users\Iyad\Desktop\TP DASI\B3224\DASI-Projet\src\main\java\fr\insalyon\dasi\dao\MediumDao.java
-C:\Users\Iyad\Desktop\TP DASI\B3224\DASI-Projet\src\main\java\fr\insalyon\dasi\dao\JpaUtil.java
-C:\Users\Iyad\Desktop\TP DASI\B3224\DASI-Projet\src\main\java\fr\insalyon\dasi\metier\modele\Astrologue.java
-C:\Users\Iyad\Desktop\TP DASI\B3224\DASI-Projet\src\main\java\fr\insalyon\dasi\metier\modele\Spirite.java
-C:\Users\Iyad\Desktop\TP DASI\B3224\DASI-Projet\src\main\java\fr\insalyon\dasi\metier\modele\Consultation.java
-C:\Users\Iyad\Desktop\TP DASI\B3224\DASI-Projet\src\main\java\fr\insalyon\dasi\dao\ConsultationDao.java
-C:\Users\Iyad\Desktop\TP DASI\B3224\DASI-Projet\src\main\java\fr\insalyon\dasi\dao\ClientDao.java
-C:\Users\Iyad\Desktop\TP DASI\B3224\DASI-Projet\src\main\java\util\Message.java
-C:\Users\Iyad\Desktop\TP DASI\B3224\DASI-Projet\src\main\java\fr\insalyon\dasi\ihm\console\Main.java
-C:\Users\Iyad\Desktop\TP DASI\B3224\DASI-Projet\src\main\java\fr\insalyon\dasi\metier\modele\Employe.java
-C:\Users\Iyad\Desktop\TP DASI\B3224\DASI-Projet\src\main\java\fr\insalyon\dasi\metier\service\Service.java
-C:\Users\Iyad\Desktop\TP DASI\B3224\DASI-Projet\src\main\java\fr\insalyon\dasi\metier\modele\Employes.java
-C:\Users\Iyad\Desktop\TP DASI\B3224\DASI-Projet\src\main\java\util\AstroTest.java
-C:\Users\Iyad\Desktop\TP DASI\B3224\DASI-Projet\src\main\java\fr\insalyon\dasi\ihm\console\Saisie.java
-C:\Users\Iyad\Desktop\TP DASI\B3224\DASI-Projet\src\main\java\fr\insalyon\dasi\dao\EmployeDao.java
-C:\Users\Iyad\Desktop\TP DASI\B3224\DASI-Projet\src\main\java\fr\insalyon\dasi\metier\modele\Cartomancien.java
-C:\Users\Iyad\Desktop\TP DASI\B3224\DASI-Projet\src\main\java\fr\insalyon\dasi\metier\modele\Client.java
->>>>>>> a94a8f1d61947f83f207d0284e1da3b2c3a6631d
+C:\Users\Iyad\Desktop\TP DASI\B3224\DASI Projet Cloned with GIT\DASI\src\main\java\fr\insalyon\dasi\metier\modele\Client.java
+C:\Users\Iyad\Desktop\TP DASI\B3224\DASI Projet Cloned with GIT\DASI\src\main\java\fr\insalyon\dasi\metier\modele\Spirite.java
+C:\Users\Iyad\Desktop\TP DASI\B3224\DASI Projet Cloned with GIT\DASI\src\main\java\fr\insalyon\dasi\metier\modele\Statut.java
+C:\Users\Iyad\Desktop\TP DASI\B3224\DASI Projet Cloned with GIT\DASI\src\main\java\fr\insalyon\dasi\dao\EmployeDao.java
+C:\Users\Iyad\Desktop\TP DASI\B3224\DASI Projet Cloned with GIT\DASI\src\main\java\fr\insalyon\dasi\metier\modele\Medium.java
+C:\Users\Iyad\Desktop\TP DASI\B3224\DASI Projet Cloned with GIT\DASI\src\main\java\fr\insalyon\dasi\dao\JpaUtil.java
+C:\Users\Iyad\Desktop\TP DASI\B3224\DASI Projet Cloned with GIT\DASI\src\main\java\fr\insalyon\dasi\metier\modele\Astrologue.java
+C:\Users\Iyad\Desktop\TP DASI\B3224\DASI Projet Cloned with GIT\DASI\src\main\java\fr\insalyon\dasi\ihm\console\Main.java
+C:\Users\Iyad\Desktop\TP DASI\B3224\DASI Projet Cloned with GIT\DASI\src\main\java\fr\insalyon\dasi\dao\ConsultationDao.java
+C:\Users\Iyad\Desktop\TP DASI\B3224\DASI Projet Cloned with GIT\DASI\src\main\java\fr\insalyon\dasi\metier\modele\Cartomancien.java
+C:\Users\Iyad\Desktop\TP DASI\B3224\DASI Projet Cloned with GIT\DASI\src\main\java\util\Message.java
+C:\Users\Iyad\Desktop\TP DASI\B3224\DASI Projet Cloned with GIT\DASI\src\main\java\fr\insalyon\dasi\dao\ClientDao.java
+C:\Users\Iyad\Desktop\TP DASI\B3224\DASI Projet Cloned with GIT\DASI\src\main\java\fr\insalyon\dasi\metier\modele\Employe.java
+C:\Users\Iyad\Desktop\TP DASI\B3224\DASI Projet Cloned with GIT\DASI\src\main\java\fr\insalyon\dasi\metier\service\Service.java
+C:\Users\Iyad\Desktop\TP DASI\B3224\DASI Projet Cloned with GIT\DASI\src\main\java\util\AstroTest.java
+C:\Users\Iyad\Desktop\TP DASI\B3224\DASI Projet Cloned with GIT\DASI\src\main\java\fr\insalyon\dasi\dao\MediumDao.java
+C:\Users\Iyad\Desktop\TP DASI\B3224\DASI Projet Cloned with GIT\DASI\src\main\java\fr\insalyon\dasi\ihm\console\Saisie.java
+C:\Users\Iyad\Desktop\TP DASI\B3224\DASI Projet Cloned with GIT\DASI\src\main\java\fr\insalyon\dasi\metier\modele\Consultation.java
