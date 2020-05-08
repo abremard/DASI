@@ -1,5 +1,9 @@
 target/**
 DASI-TD2-Correction/target/**
+DASI-TD2-Correction/.settings/**
+DASI-TD2-Correction/.classpath
+DASI-TD2-Correction/.project
+DASI-TD2-Correction/nb-configuration.xml
 DASI-TD2-Correction/Tomcat-Installation/**
 DASI-TD2-Correction/Tomcat-Instance/**
 DASI-TD2-Correction/pom.xml
