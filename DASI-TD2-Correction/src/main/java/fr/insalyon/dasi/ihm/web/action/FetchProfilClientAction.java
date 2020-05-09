@@ -9,23 +9,21 @@ import javax.servlet.http.HttpSession;
  *
  * @author DASI Team
  */
-public class AuthentifierClientAction extends Action {
+public class FetchProfilClientAction extends Action {
 
     @Override
     public void executer(HttpServletRequest request) {
         
-        String login = request.getParameter("login");
-        String password = request.getParameter("password");
+        HttpSession session = request.getSession();
+
+        long id = (long)session.getAttribute("id");
 
         Service service = new Service();
-        Client client = service.authentifierClient(login, password);
+        Client client = service.rechercherClientParId(id);
 
         request.setAttribute("client", client);
         
-        // Gestion de la Session: ici, enregistrer l'ID du Client authentifié
-        HttpSession session = request.getSession();
         if (client != null) {
-            session.setAttribute("id", client.getId());
             session.setAttribute("user", "client");
         }
         else {

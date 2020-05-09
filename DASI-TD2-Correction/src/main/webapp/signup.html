@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>PREDICT'IF</title>
+        <link rel="stylesheet" type="text/css" href="signup.css">
+        <!-- Librairie Javascript: jQuery (v3.4.1) -->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+    </head>
+    <body>
+
+        <h1>Créer un compte</h1>
+
+        <!-- Paragraphe avec id="notification" pour les messages de notification -->
+        <p id="notification">Veuillez tous les champs avant de valider votre inscription.</p>
+        
+        <!-- Champs et Bouton de Formulaire -->
+
+        <form>
+            <div class="form-group">
+                <label for="champ-nom">Nom</label>
+                <input name="champ-nom" pattern="[a-zA-Z]+" type="text" id="champ-nom" class="form-control name sequence" placeholder="Valjean" required size="40">
+            </div>
+            <div class="form-group">
+                <label for="champ-prenom">Prénom</label>
+                <input name="champ-prenom" pattern="[a-zA-Z]+" type="text" id="champ-prenom" class="form-control prenom sequence" placeholder="Jean" required disabled>
+            </div>
+            <div class="form-group">
+                <label for="">Date de Naissance</label>
+                <input name="date-naissance" max="2002-05-09" type="date" id="champ-date-naissance" class="form-control date-naissance sequence" required disabled>
+            </div>
+            <div class="form-group">
+                <label for="">Adresse Postale</label>
+                <textarea id="champ-adresse-postale" class="form-control adresse-postale sequence" rows="3" placeholder="66 Rue du Nécromancien..." required disabled></textarea>
+            </div>
+            <div class="form-group">
+                <label for="">Adresse Mail</label>
+                <input name="adresse-mail" type="email" id="champ-adresse-mail" class="form-control adresse-mail sequence" placeholder="jean.valjean@VH.com" required disabled>
+            </div>
+            <div class="form-group">
+                <label for="">Téléphone</label>
+                <input name="telephone" type="number" id="champ-telephone" class="form-control phone sequence" placeholder="0712345678" required disabled>
+            </div>
+            <div class="form-group">
+                <label for="">Mot de passe</label>
+                <input name="mdp" type="password" id="champ-mdp" class="form-control mdp sequence" required disabled>
+            </div>
+            <div class="form-group">
+                <label for="">Confirmation de mot de passe</label>
+                <input name="mdp-conf" type="password" id="champ-mdp-conf" class="form-control mdp-conf sequence" required disabled>
+            </div>
+        </form>
+        <button type="button" class="btn btn-default" id="bouton-valider" disabled>Valider</button>
+
+        <!-- Lien vers l'accueil -->
+        <p><a href="index.html">Retour à la page d'Accueil</a></p>
+
+        <script>
+
+            function Validator(event) {
+                var $element = $(event.target);
+                if ($element.valid()) {
+                    $element.addClass('valid');
+                } else {
+                    $element.removeClass('valid');
+                }
+            }
+
+            function enableNextElement(event) {
+                var $element = $(event.target);
+                if ($element.hasClass('valid')) {
+                    $element.closest('.form-group')
+                        .next('.form-group')
+                        .find('.sequence')
+                        .removeAttr('disabled');
+                }
+            }
+        
+            function verifyValidity(event) {
+                var isValid =   
+                        document.getElementById("champ-nom").checkValidity() &&
+                        document.getElementById("champ-prenom").checkValidity() &&
+                        document.getElementById("champ-date-naissance").checkValidity() &&
+                        document.getElementById("champ-adresse-postale").checkValidity() &&
+                        document.getElementById("champ-adresse-mail").checkValidity() &&
+                        document.getElementById("champ-telephone").checkValidity() &&
+                        document.getElementById("champ-mdp").checkValidity() &&
+                        document.getElementById("champ-mdp-conf").checkValidity() &&
+                        document.getElementById("champ-mdp").value == document.getElementById("champ-mdp-conf").value;                       ;                
+                document.getElementById('bouton-valider').disabled = !isValid
+            }    
+
+            $(document).ready( function () {
+
+                $('.sequence').on('change blur keyup', Validator);
+                $('.sequence').on('change blur keyup', enableNextElement);
+                $('.sequence').on('change blur keyup', verifyValidity); 
+
+                $('#bouton-valider').on('click', function (e) { // Fonction appelée lors du clic sur le bouton
+                    e.preventDefault()
+                    console.log("clic sur le bouton valider"); // LOG dans Console Javascript
+                    $('#notification').html("Création de compte..."); // Message pour le paragraphe de notification
+                    // Récupération de la valeur des champs du formulaire
+                    var champNom = $('#champ-nom').val();
+                    var champPrenom = $('#champ-prenom').val();
+                    var champDateNaissance = $('#champ-date-naissance').val();
+                    var DateNaissance = new Date(champDateNaissance);
+                    var champAdressePostale = $('#champ-adresse-postale').val();
+                    var champAdresseMail = $('#champ-adresse-mail').val();
+                    var champTelephone = $('#champ-telephone').val();
+                    var champMdp = $('#champ-mdp').val();
+                    var champMdpConf = $('#champ-mdp-conf').val();
+                    // Appel AJAX
+                    $.ajax({
+                        url: './ActionServlet',
+                        method: 'POST',
+                        data: {
+                            todo: 'creation-compte',
+                            nom: champNom,
+                            prenom: champPrenom,
+                            jourNaissance: DateNaissance.getDate(),
+                            moisNaissance: DateNaissance.getMonth(),
+                            anneeNaissance: DateNaissance.getFullYear(),
+                            adressePostale: champAdressePostale,
+                            adresseMail: champAdresseMail,
+                            telephone: champTelephone,
+                            mdp: champMdp,
+                            mdpConf: champMdpConf
+                        },
+                        dataType: 'json'
+                    })
+                    .done( function (response) { // Fonction appelée en cas d'appel AJAX réussi
+                        console.log('Response',response); // LOG dans Console Javascript
+                        if (response.connexion) {
+                            var client = response.client;
+                            window.location.href = 'login.html'
+                        }
+                        else {
+                            $('#notification').html("Erreur lors de la création de compte, veuillez ré-essayer"); // Message pour le paragraphe de notification
+                        }
+                    })
+                    .fail( function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
+                        console.log('Error',error); // LOG dans Console Javascript
+                        alert("Erreur lors de l'appel AJAX");    
+                    })
+                    .always( function () { // Fonction toujours appelée 
+                    });
+                });
+            });
+        </script>
+    </body>
+</html>

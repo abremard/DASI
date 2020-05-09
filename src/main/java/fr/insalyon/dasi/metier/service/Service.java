@@ -14,6 +14,7 @@ import fr.insalyon.dasi.metier.modele.Statut;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import util.AstroTest;
@@ -34,8 +35,8 @@ public class Service {
 
     protected AstroTest astroTest = new AstroTest();
 
-    public Long inscrireClient(Client client) throws IOException {
-        Long resultat = null;
+    public Client inscrireClient(String nom, String prenom, Date dateDeNaissance, String mail, String adresse, String telephone, String motDePasse) throws IOException {
+        Client client = new Client(nom, prenom, dateDeNaissance, mail, adresse, telephone, motDePasse);
         List<String> profilAstral = this.astroTest.getProfil(client.getPrenom(), client.getDateDeNaissance());
         client.setSigneZodiaque(profilAstral.get(0));
         client.setSigneAstro(profilAstral.get(1));
@@ -46,15 +47,14 @@ public class Service {
             JpaUtil.ouvrirTransaction();
             clientDao.creer(client);
             JpaUtil.validerTransaction();
-            resultat = client.getId();
         } catch (Exception ex) {
             Logger.getAnonymousLogger().log(Level.WARNING, "Exception lors de l'appel au Service inscrireClient(client)", ex);
             JpaUtil.annulerTransaction();
-            resultat = null;
+            client = null;
         } finally {
             JpaUtil.fermerContextePersistance();
         }
-        return resultat;
+        return client;
     }
 
     public Long inscrireEmploye(Employe employe) throws IOException {
@@ -120,14 +120,25 @@ public class Service {
                 if (client.getMotDePasse().equals(motDePasse)) {
                     resultat = client;
                 }
-            } else {
-                // Recherche de l'employé
-                Employe employe = employeDao.chercherParMail(mail);
-                if (employe != null) {
-                    // Vérification du mot de passe
-                    if (employe.getMotDePasse().equals(motDePasse)) {
-                        resultat = client;
-                    }
+            }
+        } catch (Exception ex) {
+            Logger.getAnonymousLogger().log(Level.WARNING, "Exception lors de l'appel au Service authentifierClient(mail,motDePasse)", ex);
+        } finally {
+            JpaUtil.fermerContextePersistance();
+        }
+        return resultat;
+    }
+
+    public Employe authentifierEmploye(String mail, String motDePasse) {
+        Employe resultat = null;
+        JpaUtil.creerContextePersistance();
+        try {
+            // Recherche de l'employé
+            Employe employe = employeDao.chercherParMail(mail);
+            if (employe != null) {
+                // Vérification du mot de passe
+                if (employe.getMotDePasse().equals(motDePasse)) {
+                    resultat = employe;
                 }
             }
         } catch (Exception ex) {

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>PREDICT'IF</title>
+        <script src="http://code.jquery.com/jquery.min.js"></script>
+    </head>
+    <body onload="fetchProfil()">
+        <h1>Aperçu de mon profil</h1>
+        <p id="signe-zodiaque">Signe Zodiaque: </p>
+        <p id="signe-astro">Signe Astrologique: </p>
+        <p id="couleur-bonheur">Couleur Porte-Bonheur: </p>
+        <p id="animal-totem">Animal Totem: </p>
+        <!-- TODO Demande de consultation -->
+        <button>Demander Consultation</button>
+        <button onclick="window.location.href = 'index.html';">Déconnexion</button>
+    </body>
+    <script>
+        function fetchProfil() {
+            $.ajax({
+                        url: './ActionServlet',
+                        method: 'POST',
+                        data: {
+                            todo: 'init-client',
+                        },
+                        dataType: 'json'
+                    })
+            .done( function (response) { // Fonction appelée en cas d'appel AJAX réussi
+                console.log('Response',response); // LOG dans Console Javascript
+                if (response.client) {
+                    var client = response.client;
+                    $('#signe-zodiaque').html("Signe Zodiaque: "+client.signeZodiaque); // Message pour le paragraphe de notification
+                    $('#signe-astro').html("Signe Astrologique: "+client.signeAstro); // Message pour le paragraphe de notification
+                    $('#couleur-bonheur').html("Couleur Porte-Bonheur: "+client.couleurBonheur); // Message pour le paragraphe de notification
+                    $('#animal-totem').html("Animal Totem: "+client.animalTotem); // Message pour le paragraphe de notification
+                }
+                else {
+                    alert("No client!!!");
+                }
+            })
+            .fail( function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
+                console.log('Error',error); // LOG dans Console Javascript
+                alert("Erreur lors de l'appel AJAX");
+            })
+            .always( function () { // Fonction toujours appelée
+                
+            });
+        }
+    </script>
+</html>

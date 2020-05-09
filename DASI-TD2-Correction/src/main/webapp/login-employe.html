@@ -8,7 +8,7 @@
     </head>
     <body>
 
-        <h1>Connexion</h1>
+        <h1>Connexion Employé</h1>
 
         <!-- Paragraphe avec id="notification" pour les messages de notification -->
         <p id="notification">Veuillez saisir votre identifiant (adresse mail) et votre mot de passe.</p>
@@ -20,8 +20,6 @@
         <br/>
         <button id="bouton-connexion">Connexion</button>
         <br>
-        <h3>Nouveau compte</h3>
-        <button id="bouton-creer-compte">Créer un nouveau compte</button>
         <!-- Lien vers l'accueil -->
         <p><a href="index.html">Retour à la page d'Accueil</a></p>
 
@@ -41,7 +39,7 @@
                         url: './ActionServlet',
                         method: 'POST',
                         data: {
-                            todo: 'connecter',
+                            todo: 'connecter-employe',
                             login: champLogin,
                             password: champPassword
                         },
@@ -50,8 +48,11 @@
                     .done( function (response) { // Fonction appelée en cas d'appel AJAX réussi
                         console.log('Response',response); // LOG dans Console Javascript
                         if (response.connexion) {
-                            var client = response.client;
-                            window.location.href = 'dashboard-client.html';
+                            //$('#notification').html("Connexion OK");  // Message pour le paragraphe de notification
+                            // TODO: afficher les informations du client dans la notification
+                            // Exemple: Connexion de Ada Lovelace (ID 1)
+                            var employe = response.employe;
+                            window.location.href = 'dashboard-employe.html';
                         }
                         else {
                             $('#notification').html("Erreur de Connexion"); // Message pour le paragraphe de notification

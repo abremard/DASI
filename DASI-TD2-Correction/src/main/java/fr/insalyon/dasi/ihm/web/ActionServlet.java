@@ -3,7 +3,11 @@ package fr.insalyon.dasi.ihm.web;
 import fr.insalyon.dasi.dao.JpaUtil;
 import fr.insalyon.dasi.ihm.web.action.Action;
 import fr.insalyon.dasi.ihm.web.action.AuthentifierClientAction;
+import fr.insalyon.dasi.ihm.web.action.AuthentifierEmployeAction;
+import fr.insalyon.dasi.ihm.web.action.FetchProfilClientAction;
+import fr.insalyon.dasi.ihm.web.action.CreerClientAction;
 import fr.insalyon.dasi.ihm.web.serialisation.ProfilClientSerialisation;
+import fr.insalyon.dasi.ihm.web.serialisation.ProfilEmployeSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.Serialisation;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -48,9 +52,35 @@ public class ActionServlet extends HttpServlet {
                 case "connecter":
                     action = new AuthentifierClientAction();
                     serialisation = new ProfilClientSerialisation();
+                    break; 
+                case "connecter-employe":
+                    action = new AuthentifierEmployeAction();
+                    serialisation = new ProfilEmployeSerialisation();
                     break;
-                case "...":
+                case "creation-compte":
+                    action = new CreerClientAction();
+                    serialisation = new ProfilClientSerialisation();
                     break;
+                default:
+                    if (session.getAttribute("user") != null) {
+                        String sessionUser = (String)session.getAttribute("user");
+                        switch (sessionUser) {
+                            case "client":
+                                switch (todo) {
+                                    case "init-client":
+                                        action = new FetchProfilClientAction();
+                                        serialisation = new ProfilClientSerialisation();
+                                        break;
+                                }
+                            case "employe":
+                                switch (todo) {
+                                    case "...":
+                                        break;
+                                }
+                        }
+                    } else {
+                        
+                    }
             }
         }
         

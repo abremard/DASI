@@ -1,6 +1,6 @@
 package fr.insalyon.dasi.ihm.web.action;
 
-import fr.insalyon.dasi.metier.modele.Client;
+import fr.insalyon.dasi.metier.modele.Employe   ;
 import fr.insalyon.dasi.metier.service.Service;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -9,7 +9,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author DASI Team
  */
-public class AuthentifierClientAction extends Action {
+public class AuthentifierEmployeAction extends Action {
 
     @Override
     public void executer(HttpServletRequest request) {
@@ -18,18 +18,18 @@ public class AuthentifierClientAction extends Action {
         String password = request.getParameter("password");
 
         Service service = new Service();
-        Client client = service.authentifierClient(login, password);
+        Employe employe = service.authentifierEmploye(login, password);
 
-        request.setAttribute("client", client);
+        request.setAttribute("employe", employe);
         
-        // Gestion de la Session: ici, enregistrer l'ID du Client authentifié
+        // Gestion de la Session: ici, enregistrer l'ID de l'employé authentifié
         HttpSession session = request.getSession();
-        if (client != null) {
-            session.setAttribute("id", client.getId());
-            session.setAttribute("user", "client");
+        if (employe != null) {
+            session.setAttribute("id", employe.getId());
+            session.setAttribute("user", "employe");
         }
         else {
-            session.removeAttribute("idClient");
+            session.removeAttribute("idEmploye");
         }
     }
     

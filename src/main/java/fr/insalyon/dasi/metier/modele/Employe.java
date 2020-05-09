@@ -49,6 +49,14 @@ public class Employe implements Serializable {
         return id;
     }
     
+    public Boolean getDisponible() {
+        return disponible;
+    }
+
+    public void setDisponible(Boolean disponible) {
+        this.disponible = disponible;
+    }
+
     public String getNom() {
         return nom;
     }
