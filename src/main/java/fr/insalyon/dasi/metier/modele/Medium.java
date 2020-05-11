@@ -76,5 +76,15 @@ public class Medium implements Serializable {
     public void setPresentation(String presentation) {
         this.presentation = presentation;
     }
+
+    @Override
+    public String toString() {
+        return 
+            "Medium : id=" + id +
+            ", type=" + type +
+            ", denomination=" + denomination +
+            ", genre=" + genre +
+            ", presentation=" + presentation;
+    }
     
 }

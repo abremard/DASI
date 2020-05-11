@@ -2,6 +2,8 @@ package fr.insalyon.dasi.dao;
 
 import fr.insalyon.dasi.metier.modele.Medium;
 import java.util.List;
+
+import javax.persistence.Query;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
@@ -35,17 +37,18 @@ public class MediumDao {
         return query.getResultList();
     }
 
-    public List<Medium> listerMediumsParType(String leType) {
+    public List<String> listerMediumsParType(String leType) {
         EntityManager em = JpaUtil.obtenirContextePersistance();
-        TypedQuery<Medium> query = em.createQuery("SELECT DISTINCT (c.denomination) FROM Medium c WHERE c.type = :leType ORDER BY c.denomination ASC", Medium.class);
+        Query query = em.createQuery("SELECT DISTINCT (c.denomination) FROM Medium c WHERE c.type = :leType ORDER BY c.denomination ASC");
         query.setParameter("leType", leType); // correspond au paramètre ":leType" dans la requête
-        List<Medium> Mediums = query.getResultList();
-        return query.getResultList();
+        List<String> listeMediums = query.getResultList();
+        return listeMediums;
     }
-    public List<Medium> listerTypeMedium() {
+    public List<String> listerTypeMedium() {
         EntityManager em = JpaUtil.obtenirContextePersistance();
-        TypedQuery<Medium> query = em.createQuery("SELECT DISTINCT (c.type) FROM Medium c WHERE c. ORDER BY c.denomination ASC", Medium.class);
-        return query.getResultList();
+        Query query = em.createQuery("SELECT DISTINCT (c.type) FROM Medium c ORDER BY c.type ASC");
+        List<String> listeType = query.getResultList();
+        return listeType;
     }
     
      public Medium modifierMedium(Medium medium) {

@@ -3,10 +3,125 @@
     <head>
         <meta charset="UTF-8">
         <title>PREDICT'IF</title>
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     </head>
-    <body>
+    <body onload="fetchTypeMedium()">
         <h1>Bienvenue sur PREDICT'IF</h1>
+        <ul id="liste-type-mediums"> <!-- Liste HTML à remplir avec les données --></ul>
+        <ul id="liste-mediums"> <!-- Liste HTML à remplir avec les données --></ul>
+        <ul id="details-medium"> <!-- Liste HTML à remplir avec les données --></ul>
+        
         <p><button onclick="window.location.href = 'login.html';">Connexion Client</button></p>
         <p><button onclick="window.location.href = 'login-employe.html';">Connexion Employé</button></p>
+        <script>
+
+            function fetchTypeMedium() {
+                $.ajax({
+                    url: './ActionServlet',
+                    method: 'POST',
+                    data: {
+                        todo: 'lister-type-medium',
+                    },
+                    dataType: 'json'
+                })
+                .done( function (response) { // Fonction appelée en cas d'appel AJAX réussi
+                    console.log('Response',response); // LOG dans Console Javascript
+                    if (response.typeMediums) {
+                        var typeMediums = response.typeMediums;
+                        $('#liste-type-mediums').empty();
+                        $.each(typeMediums, function (index, type) {
+                            $('#liste-type-mediums').append(
+                                '<li>' +
+                                    '<button type="button" onclick="fetchMediums(this)">' + type.type + '</button>' +
+                                '</li>'
+                            );
+                        });
+                    }
+                    else {
+                        alert("Liste Vide!");
+                    }
+                })
+                .fail( function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
+                    console.log('Error',error); // LOG dans Console Javascript
+                    alert("Erreur lors de l'appel AJAX");
+                })
+                .always( function () { // Fonction toujours appelée
+                    
+                });
+            }
+
+            function fetchMediums(elem) {
+                $.ajax({
+                        url: './ActionServlet',
+                        method: 'POST',
+                        data: {
+                            todo: 'lister-medium',
+                            type: elem.innerHTML
+                        },
+                        dataType: 'json'
+                    })
+                .done( function (response) { // Fonction appelée en cas d'appel AJAX réussi
+                    console.log('Response',response); // LOG dans Console Javascript
+                    if (response.mediums) {
+                        var mediums = response.mediums;
+                        $('#liste-mediums').empty();
+                        $('#details-medium').empty();
+                        $.each(mediums, function (index, medium) {
+                            $('#liste-mediums').append(
+                                '<li>' +
+                                    '<button type="button" onclick="afficherDetails(this)" >' + medium.denomination + '</button>' +
+                                '</li>'
+                            );
+                        });
+                    }
+                    else {
+                        alert("Auncun medium de ce type!");
+                    }
+                })
+                .fail( function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
+                    console.log('Error',error); // LOG dans Console Javascript
+                    alert("Erreur lors de l'appel AJAX");
+                })
+                .always( function () { // Fonction toujours appelée
+                    
+                });
+            }
+
+            function afficherDetails(elem) {
+                $.ajax({
+                    url: './ActionServlet',
+                    method: 'POST',
+                    data: {
+                        todo: 'details-medium',
+                        denomination: elem.innerHTML
+                    },
+                    dataType: 'json'
+                })
+                .done( function (response) { // Fonction appelée en cas d'appel AJAX réussi
+                    console.log('Response',response); // LOG dans Console Javascript
+                    if (response.medium) {
+                        var medium = response.medium;
+                        $('#details-medium').empty();
+                        $('#details-medium').append(
+                            '<li>'+ medium.denomination +'</li>' +
+                            '<li>'+ medium.genre +'</li>' +
+                            '<li>'+ medium.presentation +'</li>' +
+                            '<li>'+ medium.type +'</li>'
+                        );
+                    }
+                    else {
+                        alert("Aucun détails à afficher!");
+                    }
+                })
+                .fail( function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
+                    console.log('Error',error); // LOG dans Console Javascript
+                    alert("Erreur lors de l'appel AJAX");
+                })
+                .always( function () { // Fonction toujours appelée
+                    
+                });
+            }
+
+        </script>
     </body>
 </html>

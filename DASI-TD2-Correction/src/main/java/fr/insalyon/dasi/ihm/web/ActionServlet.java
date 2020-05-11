@@ -4,10 +4,16 @@ import fr.insalyon.dasi.dao.JpaUtil;
 import fr.insalyon.dasi.ihm.web.action.Action;
 import fr.insalyon.dasi.ihm.web.action.AuthentifierClientAction;
 import fr.insalyon.dasi.ihm.web.action.AuthentifierEmployeAction;
+import fr.insalyon.dasi.ihm.web.action.ListerMediumAction;
+import fr.insalyon.dasi.ihm.web.action.ListerTypeMediumAction;
 import fr.insalyon.dasi.ihm.web.action.FetchProfilClientAction;
+import fr.insalyon.dasi.ihm.web.action.FetchProfilMediumAction;
 import fr.insalyon.dasi.ihm.web.action.CreerClientAction;
 import fr.insalyon.dasi.ihm.web.serialisation.ProfilClientSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.ProfilEmployeSerialisation;
+import fr.insalyon.dasi.ihm.web.serialisation.ProfilMediumSerialisation;
+import fr.insalyon.dasi.ihm.web.serialisation.ListerMediumSerialisation;
+import fr.insalyon.dasi.ihm.web.serialisation.ListerTypeMediumSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.Serialisation;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -49,6 +55,19 @@ public class ActionServlet extends HttpServlet {
 
         if (todo != null) {
             switch (todo) {
+                // Cas utilisateurs externes
+                case "lister-medium":
+                    action = new ListerMediumAction();
+                    serialisation = new ListerMediumSerialisation();
+                    break;
+                case "lister-type-medium":
+                    action = new ListerTypeMediumAction();
+                    serialisation = new ListerTypeMediumSerialisation();
+                    break;
+                case "details-medium":
+                    action = new FetchProfilMediumAction();
+                    serialisation = new ProfilMediumSerialisation();
+                    break;
                 case "connecter":
                     action = new AuthentifierClientAction();
                     serialisation = new ProfilClientSerialisation();
@@ -62,6 +81,7 @@ public class ActionServlet extends HttpServlet {
                     serialisation = new ProfilClientSerialisation();
                     break;
                 default:
+                    // Cas utilisateurs internes
                     if (session.getAttribute("user") != null) {
                         String sessionUser = (String)session.getAttribute("user");
                         switch (sessionUser) {
@@ -78,7 +98,9 @@ public class ActionServlet extends HttpServlet {
                                         break;
                                 }
                         }
-                    } else {
+                    }
+                    // Cas utilisateurs sans session => les rediriger
+                    else {
                         
                     }
             }

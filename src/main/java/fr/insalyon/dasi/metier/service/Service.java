@@ -75,6 +75,24 @@ public class Service {
         return resultat;
     }
 
+    public Long creerMedium(Medium medium) throws IOException {
+        Long resultat = null;
+        JpaUtil.creerContextePersistance();
+        try {
+            JpaUtil.ouvrirTransaction();
+            mediumDao.creer(medium);
+            JpaUtil.validerTransaction();
+            resultat = medium.getId();
+        } catch (Exception ex) {
+            Logger.getAnonymousLogger().log(Level.WARNING, "Exception lors de l'appel au Service creerMedium(medium)", ex);
+            JpaUtil.annulerTransaction();
+            resultat = null;
+        } finally {
+            JpaUtil.fermerContextePersistance();
+        }
+        return resultat;
+    }
+
     public Consultation DemanderConsultation(Client client) throws IOException {
         Consultation resultat = null;
         JpaUtil.creerContextePersistance();
@@ -281,8 +299,22 @@ public class Service {
         return profilAstral;
     }
 
-    public List<Medium> listerMediumParType(String leType) {	
-        List<Medium> resultat = null;	
+    public List<String> listerTypeMedium() {	
+        List<String> resultat = null;	
+        JpaUtil.creerContextePersistance();	
+        try {	
+            resultat = mediumDao.listerTypeMedium();	
+        } catch (Exception ex) {	
+            Logger.getAnonymousLogger().log(Level.WARNING, "Exception lors de l'appel au Service listerTypeMedium()", ex);	
+            resultat = null;	
+        } finally {	
+            JpaUtil.fermerContextePersistance();	
+        }	
+        return resultat;	
+    }	
+
+    public List<String> listerMediumParType(String leType) {	
+        List<String> resultat = null;	
         JpaUtil.creerContextePersistance();	
         try {	
             resultat = mediumDao.listerMediumsParType(leType);	
