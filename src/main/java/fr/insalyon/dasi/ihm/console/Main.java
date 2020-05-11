@@ -156,7 +156,7 @@ public class Main {
         }
         afficherMedium(serena);
     }
-
+    
     public static void testerDuplicatMailInscription() {
         Calendar calendar = Calendar.getInstance();
         calendar.clear();
