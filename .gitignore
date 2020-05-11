@@ -47,6 +47,5 @@ target/classes/fr/insalyon/dasi/dao/JpaUtil$1.class
 ProjetTest/derby.log
 ProjetTest/ProjetTest/**
 ProjetTest/TD/**
-src/main/java/fr/insalyon/dasi/ihm/console/Main.java
 nbactions.xml
 src/main/resources/META-INF/persistence.xml
