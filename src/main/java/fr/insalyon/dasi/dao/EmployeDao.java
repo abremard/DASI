@@ -44,7 +44,12 @@ public class EmployeDao {
     public Employe SelectionEmployeDisponible() {
         EntityManager em = JpaUtil.obtenirContextePersistance();
         TypedQuery<Employe> query = em.createQuery("SELECT e FROM Employe e WHERE e.disponible = 1", Employe.class);
-        return query.getSingleResult();        
+        List<Employe> employes = query.getResultList();
+        Employe result = null;
+        if (!employes.isEmpty()) {
+            result = employes.get(0); // premier de la liste
+        }
+        return result;     
     }
 
     // --------------------------UPDATE----------------------------    

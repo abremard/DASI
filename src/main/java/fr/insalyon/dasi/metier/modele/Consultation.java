@@ -40,9 +40,37 @@ public class Consultation implements Serializable {
         this.commentaire = "";
         this.temps = new Date();
     }
+    
+    public Consultation(Client client, Medium medium) {
+        this.client=client;
+        this.medium=medium;
+        this.statut = Statut.PENDING;
+        this.commentaire = "";
+        this.temps = new Date();
+    }
 
     public Long getId() {
         return id;
+    }
+
+    public void setTemps(Date temps) {
+        this.temps = temps;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    public void setEmploye(Employe employe) {
+        this.employe = employe;
+    }
+
+    public Employe getEmploye() {
+        return employe;
+    }
+
+    public void setMedium(Medium medium) {
+        this.medium = medium;
     }
 
     public Date getTemps() {
@@ -68,8 +96,11 @@ public class Consultation implements Serializable {
     public String toString() {
         return 
             "Consultation : id=" + id +
+            ", employe=" + employe +    
             ", commentaire=" + commentaire +
             ", statut=" + statut +
+            ",  client=" + client +
+            ", medium=" + medium +    
             ", temps=" + temps.toString();
     }
     

@@ -7,6 +7,7 @@ package fr.insalyon.dasi.metier.modele;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -27,6 +28,7 @@ public class Medium implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String type;
+    @Column(unique = true)
     private String denomination;
     private String genre;
     private String presentation;

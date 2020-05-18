@@ -32,7 +32,6 @@ public class Service {
     protected EmployeDao employeDao = new EmployeDao();
     protected MediumDao mediumDao = new MediumDao();
     protected ConsultationDao consultationDao = new ConsultationDao();
-
     protected AstroTest astroTest = new AstroTest();
 
     public Client inscrireClient(String nom, String prenom, Date dateDeNaissance, String mail, String adresse, String telephone, String motDePasse) throws IOException {
@@ -93,13 +92,16 @@ public class Service {
         return resultat;
     }
 
-    public Consultation DemanderConsultation(Client client) throws IOException {
+    public Consultation DemanderConsultation(Client client, Medium medium) throws IOException {
         Consultation resultat = null;
         JpaUtil.creerContextePersistance();
         try {
-            Consultation consultation = new Consultation(); // ADAPTER A ORM
-            System.out.println(consultation.getStatut());
+            Consultation consultation = new Consultation(client, medium); // ADAPTER A ORM
+            //Consultation consultation = new Consultation(client,mediumDao.chercherParId(Long.valueOf(5)));
+            
+            consultation.setEmploye(SelectionAutomatiqueEmploye());
             JpaUtil.ouvrirTransaction();
+            System.out.print("apres ouvrirTransaction");
             consultationDao.creer(consultation);
             JpaUtil.validerTransaction();
             resultat = consultation;

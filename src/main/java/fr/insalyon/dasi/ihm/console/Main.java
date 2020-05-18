@@ -6,10 +6,13 @@ import java.util.Date;
 import java.util.List;
 
 import fr.insalyon.dasi.dao.JpaUtil;
+import fr.insalyon.dasi.metier.modele.Astrologue;
+import fr.insalyon.dasi.metier.modele.Cartomancien;
 import fr.insalyon.dasi.metier.modele.Client;
 import fr.insalyon.dasi.metier.modele.Consultation;
 import fr.insalyon.dasi.metier.modele.Employe;
 import fr.insalyon.dasi.metier.modele.Medium;
+import fr.insalyon.dasi.metier.modele.Spirite;
 import fr.insalyon.dasi.metier.service.Service;
 
 /**
@@ -21,9 +24,9 @@ public class Main {
     public static void main(String[] args) {
 
         JpaUtil.init();
-        // testerInscriptionClient();
-        // testerIncriptionEmploye();
-        testerCreationMedium();
+         testerInscriptionClient();
+         //testerIncriptionEmploye();
+        //testerCreationMedium();
         // initialiserClients(); // Question 3
 
         // testerListeClients(); // Question 7
@@ -36,13 +39,13 @@ public class Main {
         // testerDuplicatMailInscription;
 
         // DEMANDER CONSULTATION
-        // testerDemanderConsultation(); // Cas normal
+         //testerDemanderConsultation(); // Cas normal
 
         // RECHERCHE CLIENT PAR ID
         // testerRechercheClient(); // 2 cas normaux + 1 cas anormal
 
         // AUTHENTIFIER CLIENT
-        // testerAuthentificationClient();
+        //testerAuthentificationClient();
 
         // LISTER CLIENT
         // testerListerClients();
@@ -60,7 +63,7 @@ public class Main {
         // testerPredictionsAide();
 
         // SELECTION AUTOMATIQUE EMPLOYE
-        // testerSelectionAutomatiqueEmploye();
+         //testerSelectionAutomatiqueEmploye();
 
         // CONSULTER PROFIL EMPLOYE
         // testerConsulterProfilEmploye();
@@ -69,10 +72,10 @@ public class Main {
         // testerConsulterProfilClient();
 
         // LISTER MEDIUM PAR TYPE
-        // testerListerMediumParType();
-
+        //testerListerMediumParType();
+         
         // LISTER TYPE MEDIUM
-        // testerListerTypeMedium();
+        //testerListerTypeMedium();
 
         JpaUtil.destroy();
     }
@@ -114,7 +117,7 @@ public class Main {
         calendar.set(1996,4,11);
         Client hedy = null;
         try {
-            hedy = service.inscrireClient("Lamarr", "Hedy", new Date(calendar.getTimeInMillis()), "hlamarr@insa-lyon.fr", "58 avenue des morts","6846518","mdp2");
+            hedy = service.inscrireClient("Lamarr", "Hedy", calendar.getTime(), "hlamarr@insa-lyon.fr", "58 avenue des morts","6846518","mdp2");
             System.out.println(hedy);
         } catch (IOException e) {
             e.printStackTrace();
@@ -126,9 +129,11 @@ public class Main {
         Service service = new Service();
 
         Employe pierre = new Employe("Michel", "Pierre", "pierre-michel@insa-lyon.fr", "878945", "mdp");
+        Employe jjp = new Employe("jjp", "momo", "jjp@gmail.com", "8789485", "mdpfds");
 
         try {
             service.inscrireEmploye(pierre);
+            service.inscrireEmploye(jjp);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -138,8 +143,7 @@ public class Main {
     public static void testerCreationMedium() {
         Service service = new Service();
 
-        Medium tran = new Medium("Spirite", "Professeur Tran", "H", "Votre avenir est devant vous : regardons-le ensemble !");
-
+        Spirite tran = new Spirite("machine","Spirite", "Professeur Tran", "H", "Votre avenir est devant vous : regardons-le ensemble !");
         try {
             service.creerMedium(tran);
         } catch (IOException e) {
@@ -147,7 +151,7 @@ public class Main {
         }
         afficherMedium(tran);
 
-        Medium serena = new Medium("Astrologue", "Serena", "F", "Basée à Champigny-sur-Marne, Serena vous révèlera votre avenir pour éclairer votre passé.");
+        Astrologue serena = new Astrologue("psycho","2006","Astrologue", "Serena", "F", "Basée à Champigny-sur-Marne, Serena vous révèlera votre avenir pour éclairer votre passé.");
 
         try {
             service.creerMedium(serena);
@@ -155,6 +159,15 @@ public class Main {
             e.printStackTrace();
         }
         afficherMedium(serena);
+        
+        Cartomancien joe = new Cartomancien("Cartomancien", "Joe", "M", "Besoin de conseil concernant votre vie professionnelle? Vous etes venus au bon endroit.");
+
+        try {
+            service.creerMedium(joe);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        afficherMedium(joe);
     }
     
     public static void testerDuplicatMailInscription() {
@@ -183,15 +196,16 @@ public class Main {
     }
 
     public static void testerDemanderConsultation() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.clear();
-        calendar.set(1996,4,11);
+        //Calendar calendar = Calendar.getInstance();
+        //calendar.clear();
+        //calendar.set(1996,4,11);
         Service service = new Service();
-        Client hedy = new Client("Lamarr", "Hedy", new Date(calendar.getTimeInMillis()), "hlamarr@insa-lyon.fr", "58 avenue des morts","6846518","mdp2");
+        //Client hedy = service.rechercherClientParId(Long.valueOf(2)); //chercher le client d'ID 2
+        Client hedy= service.ConsulterProfilClient("claude.chappe@insa-lyon.fr");
+        Medium pierre = service.afficherDetailsMedium("Joe");
         Consultation consultation;
         try {
-            consultation = service.DemanderConsultation(hedy);
-            afficherConsultation(consultation);
+            consultation = service.DemanderConsultation(hedy,pierre);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -499,7 +513,7 @@ public class Main {
 
         List<String> listeMediums = null;
 
-        listeMediums = service.listerMediumParType("Spirite");
+        listeMediums = service.listerMediumParType("Astrologue");
 
         System.out.println("*** Liste des Mediums");
 

@@ -23,8 +23,8 @@ public class ConsultationDao {
     
     public void setCommentaire(Consultation consultation, String commentaire) {
         EntityManager em = JpaUtil.obtenirContextePersistance();
-        em.persist(consultation);
         consultation.setCommentaire(commentaire);
+        em.persist(consultation);
     }
 
     public Consultation modifierConsultation(Consultation consultation) {
