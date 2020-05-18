@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
 import fr.insalyon.dasi.dao.JpaUtil;
 import fr.insalyon.dasi.metier.modele.Astrologue;
 import fr.insalyon.dasi.metier.modele.Cartomancien;
@@ -24,8 +23,8 @@ public class Main {
     public static void main(String[] args) {
 
         JpaUtil.init();
-         testerInscriptionClient();
-         //testerIncriptionEmploye();
+        //testerInscriptionClient();
+        //testerIncriptionEmploye();
         //testerCreationMedium();
         // initialiserClients(); // Question 3
 
@@ -39,7 +38,16 @@ public class Main {
         // testerDuplicatMailInscription;
 
         // DEMANDER CONSULTATION
-         //testerDemanderConsultation(); // Cas normal
+        testerDemanderConsultation(); // Cas normal
+           
+        //SIGNALER DEBUT CONSULTATION
+        //testerSignalerDebutConsultation();
+       
+        //VALIDER FIN CONSULTATION
+        //testerValiderFinConsultation();
+        
+        //CONSULTER HISTORIQUE CONSULTATION
+        testerConsulterHistoriqueConsultation();
 
         // RECHERCHE CLIENT PAR ID
         // testerRechercheClient(); // 2 cas normaux + 1 cas anormal
@@ -62,8 +70,8 @@ public class Main {
         // PREDICTION AIDE
         // testerPredictionsAide();
 
-        // SELECTION AUTOMATIQUE EMPLOYE
-         //testerSelectionAutomatiqueEmploye();
+        // SELECTION AUTOMATIQUE EMPLOYE //OBSOLETE
+         //testerSelectionAutomatiqueEmploye(); 
 
         // CONSULTER PROFIL EMPLOYE
         // testerConsulterProfilEmploye();
@@ -128,11 +136,13 @@ public class Main {
     public static void testerIncriptionEmploye() {
         Service service = new Service();
 
-        Employe pierre = new Employe("Michel", "Pierre", "pierre-michel@insa-lyon.fr", "878945", "mdp");
-        Employe jjp = new Employe("jjp", "momo", "jjp@gmail.com", "8789485", "mdpfds");
+        Employe pierre = new Employe("Michel", "Pierre", "pierre-michel@insa-lyon.fr", "878945", "mdp", "M");
+        Employe jjp = new Employe("jjp", "momo", "jjp@gmail.com", "8789485", "mdpfds", "F");
+        System.out.println("-> " + pierre.toString());
 
         try {
             service.inscrireEmploye(pierre);
+            System.out.println("Piere donent arg");
             service.inscrireEmploye(jjp);
         } catch (IOException e) {
             e.printStackTrace();
@@ -211,6 +221,42 @@ public class Main {
         }
     }
 
+    public static void testerSignalerDebutConsultation() {
+        Service service = new Service();
+        Client hedy= service.ConsulterProfilClient("claude.chappe@insa-lyon.fr");
+        Medium pierre = service.afficherDetailsMedium("Joe");
+        
+        try{
+            Consultation consultation = service.DemanderConsultation(hedy,pierre);
+            service.SignalerDebutConsultation(consultation);
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+    
+    public static void testerValiderFinConsultation() {
+        Service service = new Service();
+        Client hedy= service.ConsulterProfilClient("claude.chappe@insa-lyon.fr");
+        Medium pierre = service.afficherDetailsMedium("Joe");
+        try{
+            Consultation consultation = service.DemanderConsultation(hedy,pierre);
+            service.SignalerDebutConsultation(consultation);
+            service.ValiderFinConsultation(consultation, "ok bref");
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+    
+    public static void testerConsulterHistoriqueConsultation(){
+        Service service = new Service();
+        int monId=1;
+        List<Consultation> laListe;
+        laListe = service.ConsulterHistoriqueConsultation( Long.valueOf(monId));
+        System.out.println("-> " + (laListe.get(0)).toString());
+        System.out.println("-> " + (laListe.get(1)).toString());
+        }
+
+    
     public static void testerRechercheClient() {
         
         System.out.println();
@@ -370,7 +416,7 @@ public class Main {
         
         Consultation consultation = new Consultation();
 
-        Employe pierre = new Employe("Michel", "Pierre", "pierre-michel@insa-lyon.fr", "878945", "mdp");
+        Employe pierre = new Employe("Michel", "Pierre", "pierre-michel@insa-lyon.fr", "878945", "mdp", "M");
 
         Medium azGul = new Medium("Necromancien","AzGul","Homme","Quand les vivants n'ont plus de réponses à vos questions, les morts ont toujours leur mot à dire...");
 
@@ -394,7 +440,7 @@ public class Main {
         
         Consultation consultation = new Consultation();
 
-        Employe pierre = new Employe("Michel", "Pierre", "pierre-michel@insa-lyon.fr", "878945", "mdp");
+        Employe pierre = new Employe("Michel", "Pierre", "pierre-michel@insa-lyon.fr", "878945", "mdp", "M");
 
         Medium azGul = new Medium("Necromancien","AzGul","Homme","Quand les vivants n'ont plus de réponses à vos questions, les morts ont toujours leur mot à dire...");
 
@@ -433,7 +479,7 @@ public class Main {
         System.out.println(prediction);
     }
 
-    public static void testerSelectionAutomatiqueEmploye() {
+    /*public static void testerSelectionAutomatiqueEmploye() {
 
         System.out.println();
         System.out.println("**** testerSelectionAutomatiqueEmploye() ****");
@@ -452,7 +498,7 @@ public class Main {
         Employe retour = service.SelectionAutomatiqueEmploye();
 
         afficherEmploye(retour);
-    }
+    }*/ //obsolete
 
     public static void testerConsulterProfilEmploye() {
 

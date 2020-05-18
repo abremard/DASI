@@ -41,13 +41,19 @@ public class EmployeDao {
         return query.getResultList();
     }
 
-    public Employe SelectionEmployeDisponible() {
+    public Employe SelectionEmployeDisponible(String genre) {
         EntityManager em = JpaUtil.obtenirContextePersistance();
-        TypedQuery<Employe> query = em.createQuery("SELECT e FROM Employe e WHERE e.disponible = 1", Employe.class);
+        TypedQuery<Employe> query = em.createQuery("SELECT e FROM Employe e WHERE e.disponible = 1 and e.genre = :genre ORDER BY e.nbConsultation ASC", Employe.class);
+        query.setParameter("genre", genre);
         List<Employe> employes = query.getResultList();
         Employe result = null;
         if (!employes.isEmpty()) {
             result = employes.get(0); // premier de la liste
+        }
+        else{ //si pas d'employe libre du meme genre
+            TypedQuery<Employe> altQuery = em.createQuery("SELECT e FROM Employe e WHERE e.disponible = 1 ORDER BY e.nbConsultation ASC", Employe.class);
+            List<Employe> employesAlt = altQuery.getResultList();
+            result = employesAlt.get(0); 
         }
         return result;     
     }

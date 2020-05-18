@@ -96,13 +96,14 @@ public class Service {
         Consultation resultat = null;
         JpaUtil.creerContextePersistance();
         try {
-            Consultation consultation = new Consultation(client, medium); // ADAPTER A ORM
-            //Consultation consultation = new Consultation(client,mediumDao.chercherParId(Long.valueOf(5)));
-            
-            consultation.setEmploye(SelectionAutomatiqueEmploye());
+            Consultation consultation = new Consultation(client, medium); //  
+            Employe employeSelectionne = employeDao.SelectionEmployeDisponible(medium.getGenre());
+            consultation.setEmploye(employeSelectionne);
+            employeSelectionne.setNbConsultation((employeSelectionne.getNbConsultation())+1);
             JpaUtil.ouvrirTransaction();
             System.out.print("apres ouvrirTransaction");
             consultationDao.creer(consultation);
+            employeDao.modifierEmploye(employeSelectionne);
             JpaUtil.validerTransaction();
             resultat = consultation;
         } catch (Exception ex) {
@@ -229,11 +230,10 @@ public class Service {
         return message;
     }
 
-    public void SignalerDebutConsultation(Employe employe) throws IOException {
+    public void SignalerDebutConsultation(Consultation consultation) throws IOException {
         JpaUtil.creerContextePersistance();
         try {
             JpaUtil.ouvrirTransaction();
-            Consultation consultation = new Consultation(); // ADAPTER A ORM employe.getConsultation().getStatut == PENDING...
             consultation.setStatut(Statut.STARTED);
             consultationDao.modifierConsultation(consultation);
             JpaUtil.validerTransaction();
@@ -250,25 +250,10 @@ public class Service {
         return result;
     }
 
-    public Employe SelectionAutomatiqueEmploye() {
-        Employe resultat = null;
-        JpaUtil.creerContextePersistance();
-        try {
-            resultat = employeDao.SelectionEmployeDisponible();
-        } catch (Exception ex) {
-            Logger.getAnonymousLogger().log(Level.WARNING, "Exception lors de l'appel au Service rechercherClientParId(id)", ex);
-        } finally {
-            JpaUtil.fermerContextePersistance();
-        }
-        return resultat;
-    }
-
-    public void ValiderFinConsultation(String employeMail, String commentaire) throws IOException {
+    public void ValiderFinConsultation(Consultation consultation, String commentaire) throws IOException {
         JpaUtil.creerContextePersistance();
         try {
             JpaUtil.ouvrirTransaction();
-            Employe employe = employeDao.chercherParMail(employeMail);
-            Consultation consultation = new Consultation(); // ADAPTER A ORM employe.getConsultation().getStatut == STARTED...
             consultation.setCommentaire(commentaire);
             consultation.setStatut(Statut.FINISHED);
             consultationDao.modifierConsultation(consultation);
@@ -329,11 +314,11 @@ public class Service {
         return resultat;	
     }	
 
-    public List<Consultation> ConsulterHistoriqueConsultation(String mail) {	
+    public List<Consultation> ConsulterHistoriqueConsultation(Long id) {	
         List<Consultation> resultat = null;	
         JpaUtil.creerContextePersistance();	
         try {	
-            resultat = consultationDao.ConsulterHistoriqueConsultation(mail);	
+            resultat = consultationDao.ConsulterHistoriqueConsultation(id);	
         } catch (Exception ex) {	
             Logger.getAnonymousLogger().log(Level.WARNING, "Exception lors de l'appel au Service ConsulterHistoriqueConsultation()", ex);	
             resultat = null;	
