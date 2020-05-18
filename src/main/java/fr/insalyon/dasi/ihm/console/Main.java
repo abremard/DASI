@@ -24,7 +24,7 @@ public class Main {
 
         JpaUtil.init();
         //testerInscriptionClient();
-        //testerIncriptionEmploye();
+        testerIncriptionEmploye();
         //testerCreationMedium();
         // initialiserClients(); // Question 3
 
@@ -47,7 +47,7 @@ public class Main {
         //testerValiderFinConsultation();
         
         //CONSULTER HISTORIQUE CONSULTATION
-        testerConsulterHistoriqueConsultation();
+        // testerConsulterHistoriqueConsultation();
 
         // RECHERCHE CLIENT PAR ID
         // testerRechercheClient(); // 2 cas normaux + 1 cas anormal
@@ -212,7 +212,7 @@ public class Main {
         Service service = new Service();
         //Client hedy = service.rechercherClientParId(Long.valueOf(2)); //chercher le client d'ID 2
         Client hedy= service.ConsulterProfilClient("claude.chappe@insa-lyon.fr");
-        Medium pierre = service.afficherDetailsMedium("Joe");
+        Medium pierre = service.afficherDetailsMedium(Long.valueOf(2));
         Consultation consultation;
         try {
             consultation = service.DemanderConsultation(hedy,pierre);
@@ -224,7 +224,7 @@ public class Main {
     public static void testerSignalerDebutConsultation() {
         Service service = new Service();
         Client hedy= service.ConsulterProfilClient("claude.chappe@insa-lyon.fr");
-        Medium pierre = service.afficherDetailsMedium("Joe");
+        Medium pierre = service.afficherDetailsMedium(Long.valueOf(2));
         
         try{
             Consultation consultation = service.DemanderConsultation(hedy,pierre);
@@ -237,7 +237,7 @@ public class Main {
     public static void testerValiderFinConsultation() {
         Service service = new Service();
         Client hedy= service.ConsulterProfilClient("claude.chappe@insa-lyon.fr");
-        Medium pierre = service.afficherDetailsMedium("Joe");
+        Medium pierre = service.afficherDetailsMedium(Long.valueOf(2));
         try{
             Consultation consultation = service.DemanderConsultation(hedy,pierre);
             service.SignalerDebutConsultation(consultation);
