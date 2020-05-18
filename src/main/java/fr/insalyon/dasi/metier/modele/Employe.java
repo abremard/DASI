@@ -31,17 +31,19 @@ public class Employe implements Serializable {
     private String mail;
     private String telephone;
     private String motDePasse;
+    private String genre;
     private int nbConsultation;
 
     protected Employe() {
     }
 
-    public Employe(String nom, String prenom, String mail, String telephone, String motDePasse) {
+    public Employe(String nom, String prenom, String mail, String telephone, String motDePasse, String genre) {
         this.nom = nom;
         this.prenom = prenom;
         this.mail = mail;
         this.telephone = telephone;
         this.motDePasse = motDePasse;
+        this.genre = genre;
         this.disponible = true;
     }
 
@@ -97,6 +99,14 @@ public class Employe implements Serializable {
         this.motDePasse = motDePasse;
     }
 
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+    
     public int getNbConsultation() {
         return nbConsultation;
     }
@@ -115,6 +125,7 @@ public class Employe implements Serializable {
             ", mail=" + mail +
             ", telephone=" + telephone +
             ", motDePasse=" + motDePasse +
+            ", genre=" + genre +    
             ", nbConsultation=" + nbConsultation;
     }
     
