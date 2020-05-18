@@ -18,7 +18,7 @@ public class ListerMediumAction extends Action {
         String type = request.getParameter("type");
 
         Service service = new Service();
-        List<String> listeMediums = service.listerMediumParType(type);
+        List<Medium> listeMediums = service.listerMediumParType(type); // RENVOIE LISTE MEDIUM
 
         request.setAttribute("listeMediums", listeMediums);
     }

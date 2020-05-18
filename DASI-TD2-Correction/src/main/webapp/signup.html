@@ -4,57 +4,65 @@
         <meta charset="UTF-8">
         <title>PREDICT'IF</title>
         <link rel="stylesheet" type="text/css" href="signup.css">
-        <!-- Librairie Javascript: jQuery (v3.4.1) -->
+        <link rel="stylesheet" type="text/css" href="utils.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     </head>
     <body>
 
-        <h1>Créer un compte</h1>
+        <div class="container">
+            <h1 class="site-title">PREDICT'IF</h1>
+            
+            <div class="card" style="overflow:auto">
+                <img class="card-img-top" src="https://www.chicagotribune.com/resizer/Pi7lUo31jd6qZocEAFUd03VpVPg=/1200x0/top/cloudfront-us-east-1.images.arcpublishing.com/tronc/2XWTZZQLK5A6XLZ3X2KE34J2K4.jpg" alt="Card image cap">
+                <div class="card-body">
+                    <h2 class="card-title">Créer un compte</h2>
+                    <p id="notification">Veuillez tous les champs avant de valider votre inscription.</p>
+                    <form>
+                        <div class="form-group">
+                            <label for="champ-nom">Nom</label>
+                            <input name="champ-nom" pattern="[a-zA-Z]+" type="text" id="champ-nom" class="form-control name sequence" placeholder="Valjean" required size="40">
+                        </div>
+                        <div class="form-group">
+                            <label for="champ-prenom">Prénom</label>
+                            <input name="champ-prenom" pattern="[a-zA-Z]+" type="text" id="champ-prenom" class="form-control prenom sequence" placeholder="Jean" required disabled>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Date de Naissance</label>
+                            <input name="date-naissance" max="2002-05-09" type="date" id="champ-date-naissance" class="form-control date-naissance sequence" required disabled>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Adresse Postale</label>
+                            <textarea id="champ-adresse-postale" class="form-control adresse-postale sequence" rows="3" placeholder="66 Rue du Nécromancien..." required disabled></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Adresse Mail</label>
+                            <input name="adresse-mail" type="email" id="champ-adresse-mail" class="form-control adresse-mail sequence" placeholder="jean.valjean@VH.com" required disabled>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Téléphone</label>
+                            <input name="telephone" type="number" id="champ-telephone" class="form-control phone sequence" placeholder="0712345678" required disabled>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Mot de passe</label>
+                            <input name="mdp" type="password" id="champ-mdp" class="form-control mdp sequence" required disabled>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Confirmation de mot de passe</label>
+                            <input name="mdp-conf" type="password" id="champ-mdp-conf" class="form-control mdp-conf sequence" required disabled>
+                        </div>
+                    </form>
+                <button type="button" class="btn btn-default" id="bouton-valider" style="float: right;" disabled>Valider</button>
+                </div>    
+            </div>
+    
+            <!-- Lien vers l'accueil -->
+            <p><a href="index.html">Retour à la page d'Accueil</a></p>
 
-        <!-- Paragraphe avec id="notification" pour les messages de notification -->
-        <p id="notification">Veuillez tous les champs avant de valider votre inscription.</p>
-        
-        <!-- Champs et Bouton de Formulaire -->
+        </div>
 
-        <form>
-            <div class="form-group">
-                <label for="champ-nom">Nom</label>
-                <input name="champ-nom" pattern="[a-zA-Z]+" type="text" id="champ-nom" class="form-control name sequence" placeholder="Valjean" required size="40">
-            </div>
-            <div class="form-group">
-                <label for="champ-prenom">Prénom</label>
-                <input name="champ-prenom" pattern="[a-zA-Z]+" type="text" id="champ-prenom" class="form-control prenom sequence" placeholder="Jean" required disabled>
-            </div>
-            <div class="form-group">
-                <label for="">Date de Naissance</label>
-                <input name="date-naissance" max="2002-05-09" type="date" id="champ-date-naissance" class="form-control date-naissance sequence" required disabled>
-            </div>
-            <div class="form-group">
-                <label for="">Adresse Postale</label>
-                <textarea id="champ-adresse-postale" class="form-control adresse-postale sequence" rows="3" placeholder="66 Rue du Nécromancien..." required disabled></textarea>
-            </div>
-            <div class="form-group">
-                <label for="">Adresse Mail</label>
-                <input name="adresse-mail" type="email" id="champ-adresse-mail" class="form-control adresse-mail sequence" placeholder="jean.valjean@VH.com" required disabled>
-            </div>
-            <div class="form-group">
-                <label for="">Téléphone</label>
-                <input name="telephone" type="number" id="champ-telephone" class="form-control phone sequence" placeholder="0712345678" required disabled>
-            </div>
-            <div class="form-group">
-                <label for="">Mot de passe</label>
-                <input name="mdp" type="password" id="champ-mdp" class="form-control mdp sequence" required disabled>
-            </div>
-            <div class="form-group">
-                <label for="">Confirmation de mot de passe</label>
-                <input name="mdp-conf" type="password" id="champ-mdp-conf" class="form-control mdp-conf sequence" required disabled>
-            </div>
-        </form>
-        <button type="button" class="btn btn-default" id="bouton-valider" disabled>Valider</button>
-
-        <!-- Lien vers l'accueil -->
-        <p><a href="index.html">Retour à la page d'Accueil</a></p>
 
         <script>
 

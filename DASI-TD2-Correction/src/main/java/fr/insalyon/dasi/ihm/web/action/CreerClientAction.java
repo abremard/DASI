@@ -41,6 +41,7 @@ public class CreerClientAction extends Action {
         
         Client client = null;
         try {
+            // Client nouveauClient = Client()
             client = service.inscrireClient(nom, prenom, calendar.getTime(), adresseMail, adressePostale, telephone, mdp);
         } catch (IOException ex) {
             Logger.getLogger(CreerClientAction.class.getName()).log(Level.SEVERE, null, ex);

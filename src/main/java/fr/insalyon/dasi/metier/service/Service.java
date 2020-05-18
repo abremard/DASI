@@ -313,8 +313,8 @@ public class Service {
         return resultat;	
     }	
 
-    public List<String> listerMediumParType(String leType) {	
-        List<String> resultat = null;	
+    public List<Medium> listerMediumParType(String leType) {	
+        List<Medium> resultat = null;	
         JpaUtil.creerContextePersistance();	
         try {	
             resultat = mediumDao.listerMediumsParType(leType);	
@@ -355,11 +355,11 @@ public class Service {
         return resultat;	
     }
 
-    public Medium afficherDetailsMedium(String denomination) {	
+    public Medium afficherDetailsMedium(Long id) {	
         Medium resultat = new Medium();	
         JpaUtil.creerContextePersistance();	
         try {	
-            resultat = mediumDao.chercherMediumParDenomination(denomination);	
+            resultat = mediumDao.chercherParId(id);	
         } catch (Exception ex) {	
             Logger.getAnonymousLogger().log(Level.WARNING, "Exception lors de l'appel au Service chercherMediumParDenomination()", ex);	
             resultat = null;	

@@ -3,28 +3,43 @@
     <head>
         <meta charset="UTF-8">
         <title>PREDICT'IF</title>
-        <!-- Librairie Javascript: jQuery (v3.4.1) -->
+        <link rel="stylesheet" type="text/css" href="utils.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     </head>
     <body>
-
-        <h1>Connexion</h1>
-
-        <!-- Paragraphe avec id="notification" pour les messages de notification -->
-        <p id="notification">Veuillez saisir votre identifiant (adresse mail) et votre mot de passe.</p>
-        
-        <!-- Champs et Bouton de Formulaire -->
-        Identifiant: <input type="text" id="champ-login" size="40" />
-        <br/>
-        Mot de passe: <input type="password" id="champ-password" />
-        <br/>
-        <button id="bouton-connexion">Connexion</button>
-        <br>
-        <h3>Nouveau compte</h3>
-        <button id="bouton-creer-compte">Créer un nouveau compte</button>
-        <!-- Lien vers l'accueil -->
-        <p><a href="index.html">Retour à la page d'Accueil</a></p>
-
+        <div class="container">
+            <h1 class="site-title">PREDICT'IF</h1>
+            <div class="card" style="overflow:auto">
+                <img class="card-img-top" src="https://www.chicagotribune.com/resizer/Pi7lUo31jd6qZocEAFUd03VpVPg=/1200x0/top/cloudfront-us-east-1.images.arcpublishing.com/tronc/2XWTZZQLK5A6XLZ3X2KE34J2K4.jpg" alt="Card image cap">
+                <div class="card-body">
+                    <h2 class="card-title">Connexion</h2>
+                    <p id="notification">Veuillez saisir votre identifiant (adresse mail) et votre mot de passe.</p>
+                    <form>
+                        <div class="form-group">
+                            <label for="champ-nom">Identifiant</label>
+                            <input name="champ-nom" pattern="[a-zA-Z]+" type="text" id="champ-login" class="form-control name sequence" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Mot de passe</label>
+                            <input name="mdp" type="password" id="champ-password" class="form-control mdp sequence" required>
+                        </div>
+                    </form>
+                <button type="button" class="btn btn-primary" id="bouton-connexion" style="float: right;">Valider</button>
+                </div>
+              </div>
+            <br>
+            <hr>
+            <br>
+            <h5>Pas encore de compte? Créer-en un dès maintenant!</h5>
+            <button type="button" class="btn btn-secondary"  id="bouton-creer-compte">Créer un compte</button>
+            <br>
+            <!-- Lien vers l'accueil -->
+            <p style="float: right;"><a href="index.html">Retour à la page d'Accueil</a></p>
+            <br>
+        </div>
         <script>
             $(document).ready( function () {
                 $('#bouton-connexion').on( 'click', function () { // Fonction appelée lors du clic sur le bouton

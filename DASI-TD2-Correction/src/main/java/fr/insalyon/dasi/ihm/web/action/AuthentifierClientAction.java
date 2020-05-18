@@ -29,7 +29,7 @@ public class AuthentifierClientAction extends Action {
             session.setAttribute("user", "client");
         }
         else {
-            session.removeAttribute("idClient");
+            session.removeAttribute("id");
         }
     }
     

@@ -16,19 +16,13 @@ public class FetchProfilClientAction extends Action {
         
         HttpSession session = request.getSession();
 
-        long id = (long)session.getAttribute("id");
+        Long id = (Long)session.getAttribute("id");
 
         Service service = new Service();
         Client client = service.rechercherClientParId(id);
 
         request.setAttribute("client", client);
         
-        if (client != null) {
-            session.setAttribute("user", "client");
-        }
-        else {
-            session.removeAttribute("idClient");
-        }
     }
     
 }

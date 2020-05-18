@@ -20,16 +20,17 @@ public class ListerMediumSerialisation extends Serialisation {
     @Override
     public void serialiser(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-        List<String> listeMediums = (List<String>)request.getAttribute("listeMediums");
+        List<Medium> listeMediums = (List<Medium>)request.getAttribute("listeMediums");
         
         JsonObject container = new JsonObject();
 
         if (listeMediums != null) {
             JsonArray jsonlisteMediums = new JsonArray();
             
-            for (String medium : listeMediums) {
+            for (Medium medium : listeMediums) {
                 JsonObject jsonMedium = new JsonObject();
-                jsonMedium.addProperty("denomination", medium);
+                jsonMedium.addProperty("id", medium.getId());
+                jsonMedium.addProperty("denomination", medium.getDenomination());
                 jsonlisteMediums.add(jsonMedium);
             }
             container.add("mediums", jsonlisteMediums); 

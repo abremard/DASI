@@ -497,15 +497,15 @@ public class Main {
 
         Service service = new Service();
 
-        List<String> listeMediums = null;
+        List<Medium> listeMediums = null;
 
         listeMediums = service.listerMediumParType("Spirite");
 
         System.out.println("*** Liste des Mediums");
 
         if (listeMediums != null) {
-            for (String medium : listeMediums) {
-                System.out.println(medium);
+            for (Medium medium : listeMediums) {
+                System.out.println(medium.toString());
             }
         }
 

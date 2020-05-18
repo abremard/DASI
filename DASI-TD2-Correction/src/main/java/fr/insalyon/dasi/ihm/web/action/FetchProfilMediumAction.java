@@ -14,10 +14,10 @@ public class FetchProfilMediumAction extends Action {
     @Override
     public void executer(HttpServletRequest request) {
         
-        String denomination = (String)request.getParameter("denomination");
+        Long id = Long.parseLong(request.getParameter("id"));
 
         Service service = new Service();
-        Medium medium = service.afficherDetailsMedium(denomination);
+        Medium medium = service.afficherDetailsMedium(id);
 
         request.setAttribute("medium", medium);
         
