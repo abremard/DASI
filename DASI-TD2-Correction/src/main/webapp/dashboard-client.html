@@ -3,17 +3,65 @@
     <head>
         <meta charset="UTF-8">
         <title>PREDICT'IF</title>
-        <script src="http://code.jquery.com/jquery.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="utils.css">
+        <link rel="stylesheet" type="text/css" href="dashboard-client.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     </head>
     <body onload="fetchProfil()">
-        <h1>Aperçu de mon profil</h1>
-        <p id="signe-zodiaque">Signe Zodiaque: </p>
-        <p id="signe-astro">Signe Astrologique: </p>
-        <p id="couleur-bonheur">Couleur Porte-Bonheur: </p>
-        <p id="animal-totem">Animal Totem: </p>
-        <!-- TODO Demande de consultation -->
-        <button class="btn btn-primary" onclick="window.location.href= 'demande-consultation.html'">Demander Consultation</button>
-        <button class="btn btn-secondary" onclick="window.location.href = 'index.html';" style="float: right;">Déconnexion</button>
+        <div class="container">
+            <h1 class="site-title">Aperçu de mon profil</h1>
+
+            <div class="row">
+                <div class="column">
+                  <div class="card">
+                    <img class="card-img-top" src="Zodiaque.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <h6>Signe Zodiaque</h6>
+                        <h3 id="signe-zodiaque"></h3>
+                    </div>
+                  </div>
+                </div>
+              
+                <div class="column">
+                  <div class="card">
+                    <img class="card-img-top" src="Astrologie.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <h6>Signe Astrologique</h6>
+                        <h3 id="signe-astro"></h3>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="column">
+                  <div class="card">
+                    <img class="card-img-top" src="Bonheur.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <h6>Couleur Porte-Bonheur</h6>
+                        <h3 id="couleur-bonheur"></h3>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="column">
+                  <div class="card">
+                    <img class="card-img-top" src="Totem.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <h6>Animal Totem</h6>
+                        <h3 id="animal-totem"></h3>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <br>
+              <hr>
+              <br>
+            <!-- TODO Demande de consultation -->
+            <button class="btn btn-primary" onclick="window.location.href= 'demande-consultation.html'">Demander Consultation</button>
+            <button class="btn btn-secondary" onclick="window.location.href = 'index.html';" style="float: right;">Déconnexion</button>
+        </div>
     </body>
     <script>
         function fetchProfil() {
@@ -29,10 +77,10 @@
                 console.log('Response',response); // LOG dans Console Javascript
                 if (response.client) {
                     var client = response.client;
-                    $('#signe-zodiaque').html("Signe Zodiaque: "+client.signeZodiaque); // Message pour le paragraphe de notification
-                    $('#signe-astro').html("Signe Astrologique: "+client.signeAstro); // Message pour le paragraphe de notification
-                    $('#couleur-bonheur').html("Couleur Porte-Bonheur: "+client.couleurBonheur); // Message pour le paragraphe de notification
-                    $('#animal-totem').html("Animal Totem: "+client.animalTotem); // Message pour le paragraphe de notification
+                    $('#signe-zodiaque').html(client.signeZodiaque); // Message pour le paragraphe de notification
+                    $('#signe-astro').html(client.signeAstro); // Message pour le paragraphe de notification
+                    $('#couleur-bonheur').html(client.couleurBonheur); // Message pour le paragraphe de notification
+                    $('#animal-totem').html(client.animalTotem); // Message pour le paragraphe de notification
                 }
                 else {
                     alert("No client!!!");
