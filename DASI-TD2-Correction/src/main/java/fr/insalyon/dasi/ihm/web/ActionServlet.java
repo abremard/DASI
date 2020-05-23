@@ -4,11 +4,14 @@ import fr.insalyon.dasi.dao.JpaUtil;
 import fr.insalyon.dasi.ihm.web.action.Action;
 import fr.insalyon.dasi.ihm.web.action.AuthentifierClientAction;
 import fr.insalyon.dasi.ihm.web.action.AuthentifierEmployeAction;
+import fr.insalyon.dasi.ihm.web.action.ConsulterHistoriqueConsultationEmployeAction;
 import fr.insalyon.dasi.ihm.web.action.ListerMediumAction;
 import fr.insalyon.dasi.ihm.web.action.ListerTypeMediumAction;
 import fr.insalyon.dasi.ihm.web.action.FetchProfilClientAction;
 import fr.insalyon.dasi.ihm.web.action.FetchProfilMediumAction;
 import fr.insalyon.dasi.ihm.web.action.CreerClientAction;
+import fr.insalyon.dasi.ihm.web.action.StatsDashboardEmployeAction;
+import fr.insalyon.dasi.ihm.web.action.StatsDashboardMediumAction;
 import fr.insalyon.dasi.ihm.web.serialisation.ProfilClientSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.ProfilEmployeSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.ProfilMediumSerialisation;
@@ -80,6 +83,18 @@ public class ActionServlet extends HttpServlet {
                     action = new CreerClientAction();
                     serialisation = new ProfilClientSerialisation();
                     break;
+                case "dashboard-employe":
+                    action = new StatsDashboardEmployeAction();
+                    serialisation = new StatsDashboardEmployeActionSerialisation(); //a creer
+                    break;    
+                case "dashboard-medium":
+                    action = new StatsDashboardMediumAction();
+                    serialisation = new StatsDashboardMediumActionSerialisation(); //a creer
+                    break; 
+                case "historique-employe":
+                    action = new ConsulterHistoriqueConsultationEmployeAction();
+                    serialisation = new ConsulterHistoriqueConsultationEmployeActionSerialisation(); //a creer
+                    break; 
                 default:
                     // Cas utilisateurs internes
                     if (session.getAttribute("user") != null) {
