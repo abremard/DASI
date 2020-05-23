@@ -32,7 +32,7 @@ public class Medium implements Serializable {
     private String denomination;
     private String genre;
     private String presentation;
-    
+    private int nbConsultation;
     public Medium() {
     }
 
@@ -79,6 +79,14 @@ public class Medium implements Serializable {
         this.presentation = presentation;
     }
 
+    public int getNbConsultation() {
+        return nbConsultation;
+    }
+
+    public void setNbConsultation(int nbConsultation) {
+        this.nbConsultation = nbConsultation;
+    }
+    
     @Override
     public String toString() {
         return 
@@ -86,6 +94,7 @@ public class Medium implements Serializable {
             ", type=" + type +
             ", denomination=" + denomination +
             ", genre=" + genre +
+            ", nbConsultations=" + nbConsultation +
             ", presentation=" + presentation;
     }
     

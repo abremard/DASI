@@ -39,17 +39,25 @@ public class ConsultationDao {
 
     public List<Consultation> listerConsultations() {
         EntityManager em = JpaUtil.obtenirContextePersistance();
-        TypedQuery<Consultation> query = em.createQuery("SELECT c FROM Consultation c ORDER BY c.nom ASC, c.prenom ASC", Consultation.class);
+        TypedQuery<Consultation> query = em.createQuery("SELECT c FROM Consultation c ORDER BY c.nom ASC, c.prenom ASC BY c.temps DESC", Consultation.class);
         return query.getResultList();
     }
 
     // Voir avec ORM
-    public List<Consultation> ConsulterHistoriqueConsultation(Long id) {
+    public List<Consultation> ConsulterHistoriqueConsultationClient(Long id) {
         EntityManager em = JpaUtil.obtenirContextePersistance();
-        TypedQuery<Consultation> query = em.createQuery("SELECT c FROM Consultation c WHERE c.client.id= :id", Consultation.class);
+        TypedQuery<Consultation> query = em.createQuery("SELECT c FROM Consultation c WHERE c.client.id= :id BY c.temps DESC", Consultation.class);
         query.setParameter("id", id);
         return query.getResultList();
     }
+    
+    public List<Consultation> ConsulterHistoriqueConsultationEmploye(Long id) {
+        EntityManager em = JpaUtil.obtenirContextePersistance();
+        TypedQuery<Consultation> query = em.createQuery("SELECT c FROM Consultation c WHERE c.employe.id= :id ORDER BY c.temps DESC", Consultation.class);
+        query.setParameter("id", id);
+        return query.getResultList();
+    }
+    
 
 
 }

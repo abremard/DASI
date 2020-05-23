@@ -100,10 +100,12 @@ public class Service {
             Employe employeSelectionne = employeDao.SelectionEmployeDisponible(medium.getGenre());
             consultation.setEmploye(employeSelectionne);
             employeSelectionne.setNbConsultation((employeSelectionne.getNbConsultation())+1);
+            medium.setNbConsultation((medium.getNbConsultation())+1);
             JpaUtil.ouvrirTransaction();
             System.out.print("apres ouvrirTransaction");
             consultationDao.creer(consultation);
             employeDao.modifierEmploye(employeSelectionne);
+            mediumDao.modifierMedium(medium);
             JpaUtil.validerTransaction();
             resultat = consultation;
         } catch (Exception ex) {
@@ -116,6 +118,32 @@ public class Service {
         return resultat;
     }
 
+    public List<Employe> statsDashboardEmploye() {
+        JpaUtil.creerContextePersistance();
+        List<Employe> statsEmploye = new ArrayList<Employe>();
+        try {
+            statsEmploye=employeDao.listerEmployesPourStats();
+        } catch (Exception ex) {
+            Logger.getAnonymousLogger().log(Level.WARNING, "Exception lors de l'appel au Service statsDashboardEmploye()", ex);
+        } finally {
+            JpaUtil.fermerContextePersistance();
+        }
+        return statsEmploye;
+    }
+    
+    public List<Medium> statsDashboardMedium() {
+        JpaUtil.creerContextePersistance();
+        List<Medium> statsMedium = new ArrayList<Medium>();
+        try {
+            statsMedium=mediumDao.listerMediumsPourStats();
+        } catch (Exception ex) {
+            Logger.getAnonymousLogger().log(Level.WARNING, "Exception lors de l'appel au Service statsDashboardMedium()", ex);
+        } finally {
+            JpaUtil.fermerContextePersistance();
+        }
+        return statsMedium;
+    }
+    
     public Client rechercherClientParId(Long id) {
         Client resultat = null;
         JpaUtil.creerContextePersistance();
@@ -314,13 +342,13 @@ public class Service {
         return resultat;	
     }	
 
-    public List<Consultation> ConsulterHistoriqueConsultation(Long id) {	
+    public List<Consultation> ConsulterHistoriqueConsultationClient(Long id) {	
         List<Consultation> resultat = null;	
         JpaUtil.creerContextePersistance();	
         try {	
-            resultat = consultationDao.ConsulterHistoriqueConsultation(id);	
+            resultat = consultationDao.ConsulterHistoriqueConsultationClient(id);	
         } catch (Exception ex) {	
-            Logger.getAnonymousLogger().log(Level.WARNING, "Exception lors de l'appel au Service ConsulterHistoriqueConsultation()", ex);	
+            Logger.getAnonymousLogger().log(Level.WARNING, "Exception lors de l'appel au Service ConsulterHistoriqueConsultationClient()", ex);	
             resultat = null;	
         } finally {	
             JpaUtil.fermerContextePersistance();	
@@ -328,6 +356,20 @@ public class Service {
         return resultat;	
     }	
 
+    public List<Consultation> ConsulterHistoriqueConsultationEmploye(Long id) {	
+        List<Consultation> resultat = null;	
+        JpaUtil.creerContextePersistance();	
+        try {	
+            resultat = consultationDao.ConsulterHistoriqueConsultationEmploye(id);	
+        } catch (Exception ex) {	
+            Logger.getAnonymousLogger().log(Level.WARNING, "Exception lors de l'appel au Service ConsulterHistoriqueConsultationEmploye()", ex);	
+            resultat = null;	
+        } finally {	
+            JpaUtil.fermerContextePersistance();	
+        }	
+        return resultat;	
+    }
+    
     public Client ConsulterProfilClient(String mail) {	
         Client resultat = new Client();	
         JpaUtil.creerContextePersistance();	

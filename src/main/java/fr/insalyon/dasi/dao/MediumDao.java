@@ -44,6 +44,12 @@ public class MediumDao {
         return listeType;
     }
     
+    public List<Medium> listerMediumsPourStats() {
+        EntityManager em = JpaUtil.obtenirContextePersistance();
+        TypedQuery<Medium> query = em.createQuery("SELECT e FROM Medium e ORDER BY e.nbConsultation DESC, e.denomination ASC", Medium.class);
+        return query.getResultList();
+    }
+    
      public Medium modifierMedium(Medium medium) {
         EntityManager em = JpaUtil.obtenirContextePersistance();
         return em.merge(medium);

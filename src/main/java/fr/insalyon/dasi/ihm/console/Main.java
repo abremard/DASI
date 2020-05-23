@@ -24,7 +24,7 @@ public class Main {
 
         JpaUtil.init();
         //testerInscriptionClient();
-        testerIncriptionEmploye();
+        //testerIncriptionEmploye();
         //testerCreationMedium();
         // initialiserClients(); // Question 3
 
@@ -38,17 +38,26 @@ public class Main {
         // testerDuplicatMailInscription;
 
         // DEMANDER CONSULTATION
-        testerDemanderConsultation(); // Cas normal
-           
+        //testerDemanderConsultation(); // Cas normal
+        
+        // STATS EMPLOYES 
+        //testerStatsDashboardEmploye();
+        
+        // STATS MEDIUMS 
+        testerStatsDashboardMedium();
+        
         //SIGNALER DEBUT CONSULTATION
         //testerSignalerDebutConsultation();
        
         //VALIDER FIN CONSULTATION
         //testerValiderFinConsultation();
         
-        //CONSULTER HISTORIQUE CONSULTATION
-        // testerConsulterHistoriqueConsultation();
+        //CONSULTER HISTORIQUE CONSULTATION CLIENT
+        testerConsulterHistoriqueConsultationClient();
 
+        //CONSULTER HISTORIQUE CONSULTATION EMPLOYE
+         testerConsulterHistoriqueConsultationEmploye();
+        
         // RECHERCHE CLIENT PAR ID
         // testerRechercheClient(); // 2 cas normaux + 1 cas anormal
 
@@ -212,10 +221,13 @@ public class Main {
         Service service = new Service();
         //Client hedy = service.rechercherClientParId(Long.valueOf(2)); //chercher le client d'ID 2
         Client hedy= service.ConsulterProfilClient("claude.chappe@insa-lyon.fr");
-        Medium pierre = service.afficherDetailsMedium(Long.valueOf(2));
+        Medium pierre = service.afficherDetailsMedium(Long.valueOf(4));
         Consultation consultation;
+        System.out.println("-> " + pierre.toString());
         try {
             consultation = service.DemanderConsultation(hedy,pierre);
+            System.out.println("-> " + consultation.toString());
+            
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -247,15 +259,48 @@ public class Main {
         }
     }
     
-    public static void testerConsulterHistoriqueConsultation(){
+    public static void testerConsulterHistoriqueConsultationClient(){
         Service service = new Service();
         int monId=1;
         List<Consultation> laListe;
-        laListe = service.ConsulterHistoriqueConsultation( Long.valueOf(monId));
+        laListe = service.ConsulterHistoriqueConsultationClient( Long.valueOf(monId));
         System.out.println("-> " + (laListe.get(0)).toString());
         System.out.println("-> " + (laListe.get(1)).toString());
-        }
+        System.out.println("-> " + (laListe.get(2)).toString());
+        System.out.println("-> " + (laListe.get(3)).toString());
+        System.out.println("-> " + (laListe.get(4)).toString());
+        System.out.println("-> " + (laListe.get(5)).toString());
+        System.out.println("***********************************");
+    }
+    
+    public static void testerConsulterHistoriqueConsultationEmploye(){
+        Service service = new Service();
+        int monId=201;
+        List<Consultation> laListe;
+        laListe = service.ConsulterHistoriqueConsultationEmploye( Long.valueOf(monId));
+        System.out.println("-> " + (laListe.get(0)).toString());
+        System.out.println("-> " + (laListe.get(1)).toString());
+        System.out.println("-> " + (laListe.get(2)).toString());
+        System.out.println("-> " + (laListe.get(3)).toString());
+        System.out.println("***********************************");
+    }
 
+    public static void testerStatsDashboardEmploye(){
+        Service service = new Service();
+        List<Employe> laListe;
+        laListe = service.statsDashboardEmploye();
+        System.out.println("-> " + (laListe.get(0)).toString());
+        System.out.println("-> " + (laListe.get(1)).toString());
+    }
+    
+    public static void testerStatsDashboardMedium(){
+        Service service = new Service();
+        List<Medium> laListe;
+        laListe = service.statsDashboardMedium();
+        System.out.println("-> " + (laListe.get(0)).toString());
+        System.out.println("-> " + (laListe.get(1)).toString());
+        System.out.println("-> " + (laListe.get(2)).toString());
+    }
     
     public static void testerRechercheClient() {
         

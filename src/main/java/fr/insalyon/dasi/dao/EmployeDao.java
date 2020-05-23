@@ -1,6 +1,8 @@
 package fr.insalyon.dasi.dao;
 
+import fr.insalyon.dasi.metier.modele.Consultation;
 import fr.insalyon.dasi.metier.modele.Employe;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -63,7 +65,13 @@ public class EmployeDao {
         EntityManager em = JpaUtil.obtenirContextePersistance();
         return em.merge(employe);
     }
-
+    
+    public List<Employe> listerEmployesPourStats() {
+        EntityManager em = JpaUtil.obtenirContextePersistance();
+        TypedQuery<Employe> query = em.createQuery("SELECT e FROM Employe e ORDER BY e.nbConsultation DESC, e.prenom ASC", Employe.class);
+        return query.getResultList();
+    }
+    
     // --------------------------DELETE----------------------------        
     public void supprimerEmploye(Employe employe, String SigneZodiac, String SigneAstro, String CouleurBonheur, String AnimalTotem) {
         EntityManager em = JpaUtil.obtenirContextePersistance();
