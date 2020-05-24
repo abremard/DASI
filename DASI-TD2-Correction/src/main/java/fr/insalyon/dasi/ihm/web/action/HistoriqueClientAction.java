@@ -8,19 +8,19 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Iyad
+ * @author DASI Team
  */
-public class ConsulterHistoriqueConsultationEmployeAction extends Action {
+public class HistoriqueClientAction extends Action {
+
     @Override
     public void executer(HttpServletRequest request) {
         
-        HttpSession session = request.getSession();
-        
-        Long id = (Long)session.getAttribute("id");
-        
+        Long id = Long.parseLong(request.getParameter("id"));
+
         Service service = new Service();
-        List<Consultation> consultations = service.ConsulterHistoriqueConsultationEmploye(id);
-        
-        request.setAttribute("consultations", consultations);
+        List<Consultation> consultations = service.ConsulterHistoriqueConsultationClient(id);
+
+        request.setAttribute("historiqueConsultationsClient", consultations);
     }
+    
 }

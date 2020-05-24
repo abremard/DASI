@@ -8,6 +8,8 @@ package fr.insalyon.dasi.metier.modele;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,6 +27,7 @@ public class Consultation implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String commentaire;
+    @Enumerated(EnumType.ORDINAL)
     private Statut statut;
     @Temporal(TemporalType.TIMESTAMP)
     private Date temps;
@@ -69,6 +72,14 @@ public class Consultation implements Serializable {
         return employe;
     }
 
+    public Client getClient() {
+        return client;
+    }
+
+    public Medium getMedium() {
+        return medium;
+    }
+
     public void setMedium(Medium medium) {
         this.medium = medium;
     }
@@ -93,6 +104,7 @@ public class Consultation implements Serializable {
         this.statut = statut;
     }
 
+    @Override
     public String toString() {
         return 
             "Consultation : id=" + id +

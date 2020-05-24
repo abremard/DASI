@@ -92,11 +92,13 @@ public class Service {
         return resultat;
     }
 
-    public Consultation DemanderConsultation(Client client, Medium medium) throws IOException {
+    public Consultation DemanderConsultation(Long clientId, Long mediumId) throws IOException {
         Consultation resultat = null;
         JpaUtil.creerContextePersistance();
         try {
-            Consultation consultation = new Consultation(client, medium); //  
+            Client client = clientDao.chercherParId(clientId);
+            Medium medium = mediumDao.chercherParId(mediumId);
+            Consultation consultation = new Consultation(client, medium); 
             Employe employeSelectionne = employeDao.SelectionEmployeDisponible(medium.getGenre());
             consultation.setEmploye(employeSelectionne);
             employeSelectionne.setNbConsultation((employeSelectionne.getNbConsultation())+1);
@@ -116,6 +118,11 @@ public class Service {
             JpaUtil.fermerContextePersistance();
         }
         return resultat;
+    }
+
+    public Consultation fetchConsultationEmploye(Long employeId) {
+        Consultation consultation = consultationDao.getConsultationEmploye(employeId);
+        return consultation;
     }
 
     public List<Employe> statsDashboardEmploye() {
@@ -212,7 +219,8 @@ public class Service {
     }
 
     // Envoyer un mail au client
-    public String EnvoyerMailConfirmationInscription(Client client) throws IOException {
+    public String EnvoyerMailConfirmationInscription(Long clientId) throws IOException {
+        Client client = clientDao.chercherParId(clientId);
         Client resultat = null;
         String message = 
         "Expéditeur : contact@predict.if" + System.lineSeparator() +
@@ -241,7 +249,11 @@ public class Service {
     }
 
     // Envoyer un SMS au client
-    public String EnvoyerMessageDemandeConsultation(Client client, Employe employe, Medium medium, Consultation consultation) {
+    public String EnvoyerMessageDemandeConsultation(Long consultationId) {
+        Consultation consultation = consultationDao.chercherParId(consultationId);
+        Employe employe = consultation.getEmploye();
+        Client client = consultation.getClient();
+        Medium medium = consultation.getMedium();
         String message =
         "Pour : " + client.getPrenom() + " " + client.getNom() + ", Tel : " + client.getTelephone() + System.lineSeparator() +
         "Message : Bonjour " + client.getPrenom() + ". J'ai bien reçu votre demande de consultation du " + consultation.getTemps().toString() + ". Vous pouvez dès à présent me contacter au " + employe.getTelephone() + ". A tout de suite ! Médiumiquement vôtre, " + medium.getDenomination();
@@ -250,7 +262,11 @@ public class Service {
     }
 
     // Envoyer un SMS à l'employé
-    public String EnvoyerMessageConsultation(Client client, Employe employe, Medium medium, Consultation consultation) {
+    public String EnvoyerMessageConsultation(Long consultationId) {
+        Consultation consultation = consultationDao.chercherParId(consultationId);
+        Employe employe = consultation.getEmploye();
+        Client client = consultation.getClient();
+        Medium medium = consultation.getMedium();
         String message =
         "Pour : " + employe.getPrenom() + " " + employe.getNom() + ", Tel : " + employe.getTelephone() + System.lineSeparator() +
         "Message : Bonjour " + employe.getPrenom() + ". Consultation requise pour " + client.getPrenom() + " " + client.getNom() + ". Médium à incarner : " + medium.getDenomination();
@@ -258,7 +274,8 @@ public class Service {
         return message;
     }
 
-    public void SignalerDebutConsultation(Consultation consultation) throws IOException {
+    public Consultation SignalerDebutConsultation(Long consultationId) throws IOException {
+        Consultation consultation = consultationDao.chercherParId(consultationId);
         JpaUtil.creerContextePersistance();
         try {
             JpaUtil.ouvrirTransaction();
@@ -271,6 +288,7 @@ public class Service {
         } finally {
             JpaUtil.fermerContextePersistance();
         }
+        return consultation;
     }
     
     public List<String> PredictionsAide(String couleur, String animal, int amour, int sante, int travail) throws IOException {
@@ -278,7 +296,8 @@ public class Service {
         return result;
     }
 
-    public void ValiderFinConsultation(Consultation consultation, String commentaire) throws IOException {
+    public Consultation ValiderFinConsultation(Long id, String commentaire) throws IOException {
+        Consultation consultation = consultationDao.chercherParId(id);
         JpaUtil.creerContextePersistance();
         try {
             JpaUtil.ouvrirTransaction();
@@ -292,6 +311,7 @@ public class Service {
         } finally {
             JpaUtil.fermerContextePersistance();
         }
+        return consultation;
     }    
 
     public List<String> ConsulterProfilEmploye(String mail) throws IOException {

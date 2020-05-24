@@ -44,7 +44,7 @@ public class Main {
         //testerStatsDashboardEmploye();
         
         // STATS MEDIUMS 
-        testerStatsDashboardMedium();
+        // testerStatsDashboardMedium();
         
         //SIGNALER DEBUT CONSULTATION
         //testerSignalerDebutConsultation();
@@ -53,10 +53,10 @@ public class Main {
         //testerValiderFinConsultation();
         
         //CONSULTER HISTORIQUE CONSULTATION CLIENT
-        testerConsulterHistoriqueConsultationClient();
+        // testerConsulterHistoriqueConsultationClient();
 
         //CONSULTER HISTORIQUE CONSULTATION EMPLOYE
-         testerConsulterHistoriqueConsultationEmploye();
+        //  testerConsulterHistoriqueConsultationEmploye();
         
         // RECHERCHE CLIENT PAR ID
         // testerRechercheClient(); // 2 cas normaux + 1 cas anormal
@@ -93,6 +93,9 @@ public class Main {
          
         // LISTER TYPE MEDIUM
         //testerListerTypeMedium();
+
+        // FETCH CONSULTATION EMPLOYE
+        testerFetchConsultationEmploye();
 
         JpaUtil.destroy();
     }
@@ -225,7 +228,7 @@ public class Main {
         Consultation consultation;
         System.out.println("-> " + pierre.toString());
         try {
-            consultation = service.DemanderConsultation(hedy,pierre);
+            consultation = service.DemanderConsultation(hedy.getId(),pierre.getId());
             System.out.println("-> " + consultation.toString());
             
         } catch (IOException e) {
@@ -239,8 +242,8 @@ public class Main {
         Medium pierre = service.afficherDetailsMedium(Long.valueOf(2));
         
         try{
-            Consultation consultation = service.DemanderConsultation(hedy,pierre);
-            service.SignalerDebutConsultation(consultation);
+            Consultation consultation = service.DemanderConsultation(hedy.getId(),pierre.getId());
+            service.SignalerDebutConsultation(consultation.getId());
         } catch (IOException e){
             e.printStackTrace();
         }
@@ -251,9 +254,9 @@ public class Main {
         Client hedy= service.ConsulterProfilClient("claude.chappe@insa-lyon.fr");
         Medium pierre = service.afficherDetailsMedium(Long.valueOf(2));
         try{
-            Consultation consultation = service.DemanderConsultation(hedy,pierre);
-            service.SignalerDebutConsultation(consultation);
-            service.ValiderFinConsultation(consultation, "ok bref");
+            Consultation consultation = service.DemanderConsultation(hedy.getId(),pierre.getId());
+            service.SignalerDebutConsultation(consultation.getId());
+            service.ValiderFinConsultation(consultation.getId(), "ok bref");
         } catch (IOException e){
             e.printStackTrace();
         }
@@ -439,7 +442,7 @@ public class Main {
         Client claude = new Client("Chappe", "Claude", calendar.getTime(), "claude.chappe@insa-lyon.fr",
                 "15 rue plolplo", "684318", "mdp1");
         try {
-            String message = service.EnvoyerMailConfirmationInscription(claude);
+            String message = service.EnvoyerMailConfirmationInscription(claude.getId());
             System.out.println(message);
         } catch (IOException e) {
             e.printStackTrace();
@@ -452,20 +455,10 @@ public class Main {
         System.out.println("**** testerEnvoyerMessageDemandeConsultation() ****");
         System.out.println();
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.clear();
-        calendar.set(1996,1,26);
         Service service = new Service();
-        Client claude = new Client("Chappe", "Claude", calendar.getTime(), "claude.chappe@insa-lyon.fr",
-                "15 rue plolplo", "684318", "mdp1");
-        
-        Consultation consultation = new Consultation();
 
-        Employe pierre = new Employe("Michel", "Pierre", "pierre-michel@insa-lyon.fr", "878945", "mdp", "M");
-
-        Medium azGul = new Medium("Necromancien","AzGul","Homme","Quand les vivants n'ont plus de réponses à vos questions, les morts ont toujours leur mot à dire...");
-
-        String mail = service.EnvoyerMessageDemandeConsultation(claude, pierre, azGul, consultation);
+        String mail = service.EnvoyerMessageDemandeConsultation(Long.valueOf(3));
+        //List<Consultation> liste = service.ConsulterHistoriqueConsultationEmploye(Long.valueOf(102));
 
         System.out.println(mail);
     }
@@ -489,7 +482,7 @@ public class Main {
 
         Medium azGul = new Medium("Necromancien","AzGul","Homme","Quand les vivants n'ont plus de réponses à vos questions, les morts ont toujours leur mot à dire...");
 
-        String mail = service.EnvoyerMessageConsultation(claude, pierre, azGul, consultation);
+        String mail = service.EnvoyerMessageConsultation(consultation.getId());
 
         System.out.println(mail);
 
@@ -641,6 +634,20 @@ public class Main {
         else {
             System.out.println("=> ERREUR...");
         }
+    }
+
+    public static void testerFetchConsultationEmploye() {
+        System.out.println();
+        System.out.println("**** testerFetchConsultationEmploye() ****");
+        System.out.println();
+
+        Service service = new Service();
+
+        Consultation consultation = null;
+
+        consultation = service.fetchConsultationEmploye(Long.valueOf(102));
+
+        System.out.println(consultation.toString());
     }
 
 

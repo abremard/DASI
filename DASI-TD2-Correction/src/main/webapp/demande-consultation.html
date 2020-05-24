@@ -195,8 +195,90 @@
             }
 
         function demanderConsultation() {
-            console.log(mediumChoisi);
-            
+            // console.log(mediumChoisi);
+            $.ajax({
+                    url: './ActionServlet',
+                    method: 'POST',
+                    data: {
+                        todo: 'demander-consultation',
+                        medium: mediumChoisi
+                    },
+                    dataType: 'json'
+                })
+            .done( function (response) { // Fonction appelée en cas d'appel AJAX réussi
+                console.log('Response',response); // LOG dans Console Javascript
+                if (response.consultation) {
+                    var consultation = response.consultation;
+                    $('#consultation').empty();
+                    $('#liste-mediums').append(
+                        '<h5>Ma prochaine consultation</h5>'+
+                        '<p> Date : '+ consultation.date +'</p>'+
+                        '<p> Médium : '+ consultation.medium +'</p>'+
+                        '<p> Vous recevrez très prochainement les détails de la consultation. A bientôt... </p>'
+                    );
+                    sendSMS(consultation.id);
+                    sendMail(consultation.id);
+                }
+                else {
+                    alert("Un problème est survenu. Veuillez ré-essayer ultérieurement");
+                }
+            })
+            .fail( function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
+                console.log('Error',error); // LOG dans Console Javascript
+                alert("Erreur lors de l'appel AJAX");
+            });
+        }
+
+        function sendSMS(consultationId) {
+            $.ajax({
+                    url: './ActionServlet',
+                    method: 'POST',
+                    data: {
+                        todo: 'sms-client',
+                        consultationId: consultationId
+                    },
+                    dataType: 'json'
+                })
+            .done( function (response) { // Fonction appelée en cas d'appel AJAX réussi
+                console.log('Response',response); // LOG dans Console Javascript
+                if (response.smsClientConsultation) {
+                    var smsClientConsultation = response.smsClientConsultation;
+                    console.log(smsClientConsultation);
+                }
+                else {
+                    alert("Un problème est survenu. Veuillez ré-essayer ultérieurement");
+                }
+            })
+            .fail( function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
+                console.log('Error',error); // LOG dans Console Javascript
+                alert("Erreur lors de l'appel AJAX");
+            });
+        }
+
+        function sendMail(consultationId) {
+            $.ajax({
+                    url: './ActionServlet',
+                    method: 'POST',
+                    data: {
+                        todo: 'sms-employe',
+                        consultationId: consultationId
+                    },
+                    dataType: 'json'
+                })
+            .done( function (response) { // Fonction appelée en cas d'appel AJAX réussi
+                console.log('Response',response); // LOG dans Console Javascript
+                if (response.smsEmployeConsultation) {
+                    var smsEmployeConsultation = response.smsEmployeConsultation;
+                    console.log(smsEmployeConsultation);
+                }
+                else {
+                    alert("Un problème est survenu. Veuillez ré-essayer ultérieurement");
+                }
+            })
+            .fail( function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
+                console.log('Error',error); // LOG dans Console Javascript
+                alert("Erreur lors de l'appel AJAX");
+            });
         }
 
         </script>

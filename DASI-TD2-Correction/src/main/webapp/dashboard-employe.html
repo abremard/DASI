@@ -9,10 +9,143 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     </head>
-    <body>
+    <body onload="fetchDashboardEmploye();fetchDashboardMedium();fetchHistoriqueEmploye();">
         <div class="container">
-            <h1 class="site-title">Aperçu du profil de mon client</h1>
+            <h1 class="site-title">Aperçu</h1>
+            <div class="row">
+                <div class="col-4">
+                    <div class="list-group" id="liste-employes" role="tablist"></div>
+                </div>
+                <div class="col-4">
+                    <div class="list-group" id="liste-mediums" role="tablist"></div>
+                </div>
+                <div class="col-4">
+                    <div class="list-group" id="historique-employe" role="tablist"></div>
+                </div>
+            </div>
+            <br>
+            <hr>
+            <br>
+            <button class="btn btn-primary" onclick="window.location.href = 'consultation-employe.html';">Consultation</button>
             <button class="btn btn-secondary" onclick="window.location.href = 'index.html';" style="float: right;">Déconnexion</button>
+            <br>
+            <br>
         </div>
+
+
+        <script>
+            function fetchDashboardEmploye() {
+                $.ajax({
+                        url: './ActionServlet',
+                        method: 'POST',
+                        data: {
+                            todo: 'dashboard-employe',
+                        },
+                        dataType: 'json'
+                    })
+                .done( function (response) { // Fonction appelée en cas d'appel AJAX réussi
+                    console.log('Response',response); // LOG dans Console Javascript
+                    if (response.employes) {
+                        var employes = response.employes;
+                        $('#liste-employes').empty();
+                        $('#liste-employes').append(
+                            '<h5>Employés</h5>'+
+                            '<br>'
+                        );
+                        $.each(employes, function (index, employe) {
+                            // console.log(employe);
+                            $('#liste-employes').append(
+                                '<div class="list-group-item list-group-item-action">' +
+                                    employe.prenom + " " + employe.nom + " : " + employe.nbconsultation +
+                                '</div>'
+                            );
+                        });
+                    }
+                    else {
+                        alert("No employe!!!");
+                    }
+                })
+                .fail( function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
+                    console.log('Error',error); // LOG dans Console Javascript
+                    alert("Erreur lors de l'appel AJAX");
+                });   
+            }
+            function fetchDashboardMedium() {
+                $.ajax({
+                        url: './ActionServlet',
+                        method: 'POST',
+                        data: {
+                            todo: 'dashboard-medium',
+                        },
+                        dataType: 'json'
+                    })
+                .done( function (response) { // Fonction appelée en cas d'appel AJAX réussi
+                    console.log('Response',response); // LOG dans Console Javascript
+                    if (response.mediums) {
+                        var mediums = response.mediums;
+                        $('#liste-mediums').empty();
+                        $('#liste-mediums').append(
+                            '<h5>Mediums</h5>'+
+                            '<br>'
+                        );
+                        $.each(mediums, function (index, medium) {
+                            // console.log(medium);
+                            $('#liste-mediums').append(
+                                '<div class="list-group-item list-group-item-action">' +
+                                    medium.denomination + " : " + medium.nbconsultation +
+                                '</div>'
+                            );
+                        });
+                    }
+                    else {
+                        alert("No medium!!!");
+                    }
+                })
+                .fail( function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
+                    console.log('Error',error); // LOG dans Console Javascript
+                    alert("Erreur lors de l'appel AJAX");
+                }); 
+            }
+            function fetchHistoriqueEmploye() {
+                $.ajax({
+                        url: './ActionServlet',
+                        method: 'POST',
+                        data: {
+                            todo: 'historique-employe',
+                        },
+                        dataType: 'json'
+                    })
+                .done( function (response) { // Fonction appelée en cas d'appel AJAX réussi
+                    console.log('Response',response); // LOG dans Console Javascript
+                    if (response.consultations) {
+                        var consultations = response.consultations;
+                        $('#historique-employe').empty();
+                        $('#historique-employe').append(
+                            '<h5>Mes consultations</h5>'+
+                            '<br>'
+                        );
+                        $.each(consultations, function (index, consultation) {
+                            // console.log(consultation);
+                            $('#historique-employe').append(
+                                '<div class="list-group-item list-group-item-action">' +
+                                    '<p> Date : '+ consultation.date +'</p>'+
+                                    '<p> Statut : '+ consultation.statut +'</p>'+
+                                    '<p> Médium : '+ consultation.medium +'</p>'+
+                                    '<p> Client : '+ consultation.nomClient + ' ' + consultation.prenomClient +'</p>'+
+                                    '<p> Commentaire : <p>'+ consultation.commentaire +'</p></p>'+
+                                '</div>'
+                            );
+                        });
+                    }
+                    else {
+                        alert("No consultations!!!");
+                    }
+                })
+                .fail( function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
+                    console.log('Error',error); // LOG dans Console Javascript
+                    alert("Erreur lors de l'appel AJAX");
+                }); 
+            }
+        </script>
     </body>
 </html>

@@ -12,12 +12,31 @@ import fr.insalyon.dasi.ihm.web.action.FetchProfilMediumAction;
 import fr.insalyon.dasi.ihm.web.action.CreerClientAction;
 import fr.insalyon.dasi.ihm.web.action.StatsDashboardEmployeAction;
 import fr.insalyon.dasi.ihm.web.action.StatsDashboardMediumAction;
+import fr.insalyon.dasi.ihm.web.action.DemanderConsultationAction;
+import fr.insalyon.dasi.ihm.web.action.FetchConsultationAction;
+import fr.insalyon.dasi.ihm.web.action.HistoriqueClientAction;
+import fr.insalyon.dasi.ihm.web.action.PredictionAideAction;
+import fr.insalyon.dasi.ihm.web.action.SignalerDebutConsultationAction;
+import fr.insalyon.dasi.ihm.web.action.SmsClientAction;
+import fr.insalyon.dasi.ihm.web.action.SmsEmployeAction;
+import fr.insalyon.dasi.ihm.web.action.ValiderFinConsultationAction;
+import fr.insalyon.dasi.ihm.web.serialisation.ConsultationEmployeSerialisation;
+
 import fr.insalyon.dasi.ihm.web.serialisation.ProfilClientSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.ProfilEmployeSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.ProfilMediumSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.ListerMediumSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.ListerTypeMediumSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.Serialisation;
+import fr.insalyon.dasi.ihm.web.serialisation.StatsDashboardEmployeActionSerialisation;
+import fr.insalyon.dasi.ihm.web.serialisation.StatsDashboardMediumActionSerialisation;
+import fr.insalyon.dasi.ihm.web.serialisation.ConsulterHistoriqueConsultationEmployeSerialisation;
+import fr.insalyon.dasi.ihm.web.serialisation.ConsultationSerialisation;
+import fr.insalyon.dasi.ihm.web.serialisation.HistoriqueConsultationSerialisation;
+import fr.insalyon.dasi.ihm.web.serialisation.PredictionSerialisation;
+import fr.insalyon.dasi.ihm.web.serialisation.SmsClientSerialisation;
+import fr.insalyon.dasi.ihm.web.serialisation.SmsEmployeSerialisation;
+
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -83,18 +102,10 @@ public class ActionServlet extends HttpServlet {
                     action = new CreerClientAction();
                     serialisation = new ProfilClientSerialisation();
                     break;
-                case "dashboard-employe":
-                    action = new StatsDashboardEmployeAction();
-                    serialisation = new StatsDashboardEmployeActionSerialisation(); //a creer
-                    break;    
-                case "dashboard-medium":
-                    action = new StatsDashboardMediumAction();
-                    serialisation = new StatsDashboardMediumActionSerialisation(); //a creer
-                    break; 
-                case "historique-employe":
-                    action = new ConsulterHistoriqueConsultationEmployeAction();
-                    serialisation = new ConsulterHistoriqueConsultationEmployeActionSerialisation(); //a creer
-                    break; 
+                case "mail-client": // TO ADD ON JAVASCRIPT
+                    action = new DemanderConsultationAction();
+                    serialisation = new ConsultationSerialisation();
+                    break;                
                 default:
                     // Cas utilisateurs internes
                     if (session.getAttribute("user") != null) {
@@ -106,11 +117,55 @@ public class ActionServlet extends HttpServlet {
                                         action = new FetchProfilClientAction();
                                         serialisation = new ProfilClientSerialisation();
                                         break;
+                                    case "demander-consultation":
+                                        action = new DemanderConsultationAction();
+                                        serialisation = new ConsultationSerialisation();
+                                        break;
+                                    case "sms-client":
+                                        action = new SmsClientAction();
+                                        serialisation = new SmsClientSerialisation();
+                                        break;
+                                    case "sms-employe":
+                                        action = new SmsEmployeAction();
+                                        serialisation = new SmsEmployeSerialisation();
+                                        break;
                                 }
                             case "employe":
                                 switch (todo) {
-                                    case "...":
+                                    // Consultation
+                                    case "fetch-consultation":
+                                        action = new FetchConsultationAction();
+                                        serialisation = new ConsultationEmployeSerialisation();
                                         break;
+                                    case "signaler-debut-consultation":
+                                        action = new SignalerDebutConsultationAction();
+                                        serialisation = new ConsultationSerialisation();
+                                        break;
+                                    case "historique-client":
+                                        action = new HistoriqueClientAction();
+                                        serialisation = new HistoriqueConsultationSerialisation();
+                                        break;
+                                    case "prediction-aide":
+                                        action = new PredictionAideAction();
+                                        serialisation = new PredictionSerialisation();
+                                        break;
+                                    case "valider-fin-consultation":
+                                        action = new ValiderFinConsultationAction();
+                                        serialisation = new ConsultationSerialisation();
+                                        break;
+                                    // Dashboard
+                                    case "dashboard-employe":
+                                        action = new StatsDashboardEmployeAction();
+                                        serialisation = new StatsDashboardEmployeActionSerialisation();
+                                        break;    
+                                    case "dashboard-medium":
+                                        action = new StatsDashboardMediumAction();
+                                        serialisation = new StatsDashboardMediumActionSerialisation();
+                                        break;
+                                    case "historique-employe":
+                                        action = new ConsulterHistoriqueConsultationEmployeAction();
+                                        serialisation = new ConsulterHistoriqueConsultationEmployeSerialisation();
+                                        break; 
                                 }
                         }
                     }

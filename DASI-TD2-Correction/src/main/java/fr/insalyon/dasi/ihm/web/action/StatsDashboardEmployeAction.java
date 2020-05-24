@@ -16,7 +16,6 @@ public class StatsDashboardEmployeAction extends Action {
         Service service = new Service();
         List<Employe> statsEmploye = service.statsDashboardEmploye();
         request.setAttribute("statsEmploye", statsEmploye);
-        
     }
     
 }

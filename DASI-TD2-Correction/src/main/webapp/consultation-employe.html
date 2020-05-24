@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>PREDICT'IF</title>
+        <link rel="stylesheet" type="text/css" href="utils.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    </head>
+    <body onload="fetchConsultationClient();">
+        <div class="container">
+            <h1 class="site-title">Consultation</h1>
+            <div class="row">
+                <div class="col-4">
+                    <div class="list-group" id="info-client" role="tablist"></div>
+                </div>
+                <div class="col-4">
+                    <div class="list-group" id="profil-astral" role="tablist"></div>
+                </div>
+                <div class="col-4">
+                    <div class="list-group" id="historique-client" role="tablist"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <div id="demander-prediction" role="tablist">
+                        <h5>Prédiction</h5>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text" id="basic-addon1">Santé</span>
+                            </div>
+                            <input type="text" class="form-control" id="sante-input">
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text" id="basic-addon2">Amour</span>
+                            </div>
+                            <input type="text" class="form-control" id="amour-input">
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text" id="basic-addon3">Travail</span>
+                            </div>
+                            <input type="text" class="form-control" id="travail-input">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <h5>Résultats</h5>
+                    <div class="list-group" id="resultat-prediction" role="tablist"></div>
+                </div>
+                <div class="col-4">
+                    <div class="list-group" id="commentaire" role="tablist">
+                        <h5>Commentaire</h5>
+                        <div class="input-group">
+                            <textarea class="form-control" id="commentaire-input" aria-label="With textarea"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <button class="btn btn-dark" id="bouton-prediction" onclick="DemanderPrediction()">Prédire</button>
+            <hr>
+            <div style="float: right;">
+                <button class="btn btn-success" id="bouton-commencer" onclick="CommencerConsultation()">Commencer</button>
+                <button class="btn btn-success" id="bouton-soumettre" onclick="TerminerConsultation()" disabled>Terminer</button>
+            </div>
+            <br>
+            <hr>
+            <br>
+            <button class="btn btn-primary" onclick="window.location.href = 'dashboard-employe.html';">Aperçu</button>
+            <button class="btn btn-secondary" onclick="window.location.href = 'index.html';" style="float: right;">Déconnexion</button>
+            <br>
+            <br>
+        </div>
+
+
+        <script>
+
+            var consultation, medium, client;
+
+            function fetchConsultationClient() {
+                $.ajax({
+                        url: './ActionServlet',
+                        method: 'POST',
+                        data: {
+                            todo: 'fetch-consultation',
+                        },
+                        dataType: 'json'
+                    })
+                .done( function (response) { // Fonction appelée en cas d'appel AJAX réussi
+                    // console.log('Response',response); // LOG dans Console Javascript
+                    if (response.consultation) {
+                        consultation = response.consultation;
+                        medium = response.medium;
+                        client = response.client;
+                        $('#info-client').empty();
+                        $('#info-client').append(
+                            '<h5>Information Client</h5>'+
+                            '<br>'+
+                            '<div class="list-group-item list-group-item-action">Prenom : ' + client.prenom + '</div>' +
+                            '<div class="list-group-item list-group-item-action">Nom : ' + client.nom + '</div>' +
+                            '<div class="list-group-item list-group-item-action">Date de naissance : <p>' + client.dateNaissance + '</p></div>'
+                        );
+                        $('#profil-astral').empty();
+                        $('#profil-astral').append(
+                            '<h5>Profil Astral</h5>'+
+                            '<br>'+
+                            '<div class="list-group-item list-group-item-action">Signe du Zodiaque : ' + client.signeZodiaque + '</div>' +
+                            '<div class="list-group-item list-group-item-action">Signe Astrologique : ' + client.signeAstro + '</div>' +
+                            '<div class="list-group-item list-group-item-action">Couleur Porte-Bonheur : ' + client.couleurBonheur + '</div>' +
+                            '<div class="list-group-item list-group-item-action">Animal Totem : ' + client.animalTotem + '</div>'
+                        );
+                        HistoriqueClient(client.id);
+                    }
+                    else {
+                        alert("No employe!!!");
+                    }
+                })
+                .fail( function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
+                    console.log('Error',error); // LOG dans Console Javascript
+                    alert("Aucune consultation demandée pour le moment!");
+                    window.location.href = 'dashboard-employe.html'
+                });   
+            }
+
+            function HistoriqueClient(id) {
+                $.ajax({
+                        url: './ActionServlet',
+                        method: 'POST',
+                        data: {
+                            todo: 'historique-client',
+                            id: id
+                        },
+                        dataType: 'json'
+                    })
+                .done( function (response) { // Fonction appelée en cas d'appel AJAX réussi
+                console.log('Response',response); // LOG dans Console Javascript
+                    if (response.consultations) {
+                        var consultations = response.consultations;
+                        $('#historique-client').empty();
+                        $('#historique-client').append(
+                            '<h5>Historique</h5>'+
+                            '<br>'
+                        );
+                        $.each(consultations, function (index, consultation) {
+                            // console.log(consultation);
+                            $('#historique-client').append(
+                                '<div class="list-group-item list-group-item-action">' +
+                                    '<p> Date : '+ consultation.date +'</p>'+
+                                    '<p> Médium : '+ consultation.medium +'</p>'+
+                                    '<p> Commentaire : '+ consultation.commentaire +'</p>'+
+                                '</div>'
+                            );
+                        });
+                    }
+                    else {
+                        alert("No consultations!!!");
+                    }
+                })
+                .fail( function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
+                    console.log('Error',error); // LOG dans Console Javascript
+                    alert("Erreur lors de l'appel AJAX");
+                }); 
+            }
+        
+            function CommencerConsultation() {
+                $.ajax({
+                        url: './ActionServlet',
+                        method: 'POST',
+                        data: {
+                            todo: 'signaler-debut-consultation',
+                            id: consultation.id
+                        },
+                        dataType: 'json'
+                    })
+                .done( function (response) { // Fonction appelée en cas d'appel AJAX réussi
+                    alert("consultation en cours");
+                    document.getElementById('bouton-commencer').disabled = true;
+                    document.getElementById('bouton-soumettre').disabled = false;
+                })
+                .fail( function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
+                    console.log('Error',error); // LOG dans Console Javascript
+                    alert("Erreur lors de l'appel AJAX");
+                }); 
+            }
+
+            function DemanderPrediction() {
+                $.ajax({
+                        url: './ActionServlet',
+                        method: 'POST',
+                        data: {
+                            todo: 'prediction-aide',
+                            couleur: client.couleurBonheur,
+                            animal: client.animalTotem,
+                            amour: document.getElementById("amour-input").value,
+                            sante: document.getElementById("sante-input").value,
+                            travail: document.getElementById("travail-input").value
+                        },
+                        dataType: 'json'
+                    })
+                .done( function (response) { // Fonction appelée en cas d'appel AJAX réussi
+                $('#resultat-prediction').empty();
+                $('#resultat-prediction').append(
+                    '<div class="list-group-item list-group-item-action">Amour : ' + response.predictions.amour + '</div>' +
+                    '<div class="list-group-item list-group-item-action">Santé : ' + response.predictions.sante + '</div>' +
+                    '<div class="list-group-item list-group-item-action">Travail : <p>' + response.predictions.travail + '</p></div>'
+                    );
+                })
+                .fail( function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
+                    console.log('Error',error); // LOG dans Console Javascript
+                    alert("Erreur lors de l'appel AJAX");
+                }); 
+            }
+
+            function TerminerConsultation() {
+                $.ajax({
+                        url: './ActionServlet',
+                        method: 'POST',
+                        data: {
+                            todo: 'valider-fin-consultation',
+                            id: consultation.id,
+                            commentaire: document.getElementById("commentaire-input").value
+                        },
+                        dataType: 'json'
+                    })
+                .done( function (response) { // Fonction appelée en cas d'appel AJAX réussi
+                    alert("consultation terminée");
+                    document.getElementById('bouton-soumettre').disabled = true;
+                    window.location.href = 'dashboard-employe.html'
+                })
+                .fail( function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
+                    console.log('Error',error); // LOG dans Console Javascript
+                    alert("Erreur lors de l'appel AJAX");
+                }); 
+            }
+
+        </script>
+    </body>
+</html>
