@@ -276,10 +276,13 @@ public class Service {
 
     public Consultation SignalerDebutConsultation(Long consultationId) throws IOException {
         Consultation consultation = consultationDao.chercherParId(consultationId);
+        Employe employe = consultation.getEmploye();
         JpaUtil.creerContextePersistance();
         try {
             JpaUtil.ouvrirTransaction();
             consultation.setStatut(Statut.STARTED);
+            employe.setDisponible(false);
+            employeDao.modifierEmploye(employe);
             consultationDao.modifierConsultation(consultation);
             JpaUtil.validerTransaction();
         } catch (Exception ex) {
@@ -298,11 +301,14 @@ public class Service {
 
     public Consultation ValiderFinConsultation(Long id, String commentaire) throws IOException {
         Consultation consultation = consultationDao.chercherParId(id);
+        Employe employe = consultation.getEmploye();
         JpaUtil.creerContextePersistance();
         try {
             JpaUtil.ouvrirTransaction();
             consultation.setCommentaire(commentaire);
             consultation.setStatut(Statut.FINISHED);
+            employe.setDisponible(true);
+            employeDao.modifierEmploye(employe);
             consultationDao.modifierConsultation(consultation);
             JpaUtil.validerTransaction();
         } catch (Exception ex) {
